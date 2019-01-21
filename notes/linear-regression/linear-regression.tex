@@ -2,79 +2,81 @@
 
 \usepackage{mathrsfs, fullpage, amsmath, amssymb, graphicx, xcolor, tikz}
 
-\renewcommand{\phi}{\varphi}
-\renewcommand{\epsilon}{\varepsilon}
-\renewcommand{\hat}{\widehat}
-\newcommand{\bx}{\boldsymbol{x}}
-\newcommand{\by}{\boldsymbol{y}}
-\newcommand{\cA}{\mathscr{A}}
-\newcommand{\cB}{\mathscr{B}}
-\newcommand{\cC}{\mathscr{C}}
-\newcommand{\cD}{\mathscr{D}}
-\newcommand{\cF}{\mathscr{F}}
-\newcommand{\cG}{\mathscr{G}}
-\newcommand{\cN}{\mathscr{N}}
-\newcommand{\cO}{\mathscr{O}}
-\newcommand{\cP}{\mathscr{P}}
-\newcommand{\cX}{\mathscr{X}}
-\newcommand{\cY}{\mathscr{Y}}
-\newcommand{\PP}{\mathbb{P}}
-\newcommand{\RR}{\mathbb{R}}
-\newcommand{\ZZ}{\mathbb{Z}}
-\newcommand{\lra}{\longrightarrow}
-\newcommand{\One}{\mathbf{1}}
-\newcommand{\blank}{\,\cdot\,}
+\input{../../macros.tex}
 
-\newcommand{\vpi}{\boldsymbol{\pi}}
-\newcommand{\vtheta}{\boldsymbol{\theta}}
-\newcommand{\ve}{\boldsymbol{e}}
-\newcommand{\vu}{\boldsymbol{u}}
-\newcommand{\vv}{\boldsymbol{v}}
-\newcommand{\vw}{\boldsymbol{w}}
-\newcommand{\vx}{\boldsymbol{x}}
-\newcommand{\vy}{\boldsymbol{y}}
-\newcommand{\vz}{\boldsymbol{z}}
-\newcommand{\vZ}{\boldsymbol{Z}}
+% \renewcommand{\phi}{\varphi}
+% \renewcommand{\epsilon}{\varepsilon}
+% \renewcommand{\hat}{\widehat}
+% \newcommand{\bx}{\boldsymbol{x}}
+% \newcommand{\by}{\boldsymbol{y}}
+% \newcommand{\cA}{\mathscr{A}}
+% \newcommand{\cB}{\mathscr{B}}
+% \newcommand{\cC}{\mathscr{C}}
+% \newcommand{\cD}{\mathscr{D}}
+% \newcommand{\cF}{\mathscr{F}}
+% \newcommand{\cG}{\mathscr{G}}
+% \newcommand{\cN}{\mathscr{N}}
+% \newcommand{\cO}{\mathscr{O}}
+% \newcommand{\cP}{\mathscr{P}}
+% \newcommand{\cX}{\mathscr{X}}
+% \newcommand{\cY}{\mathscr{Y}}
+% \newcommand{\PP}{\mathbb{P}}
+% \newcommand{\RR}{\mathbb{R}}
+% \newcommand{\ZZ}{\mathbb{Z}}
+% \newcommand{\lra}{\longrightarrow}
+% \newcommand{\One}{\mathbf{1}}
+% \newcommand{\blank}{\,\cdot\,}
 
-\newcommand{\xhat}{\hat{x}}
-\newcommand{\yhat}{\hat{y}}
-\newcommand{\bxhat}{\hat{\bx}}
-\newcommand{\byhat}{\hat{\by}}
-\newcommand{\betahat}{\hat{\beta}}
+% \newcommand{\vpi}{\boldsymbol{\pi}}
+% \newcommand{\vtheta}{\boldsymbol{\theta}}
+% \newcommand{\ve}{\boldsymbol{e}}
+% \newcommand{\vu}{\boldsymbol{u}}
+% \newcommand{\vv}{\boldsymbol{v}}
+% \newcommand{\vw}{\boldsymbol{w}}
+% \newcommand{\vx}{\boldsymbol{x}}
+% \newcommand{\vy}{\boldsymbol{y}}
+% \newcommand{\vz}{\boldsymbol{z}}
+% \newcommand{\vZ}{\boldsymbol{Z}}
 
-\newcommand{\iid}{i.i.d.\ }
+% \newcommand{\xhat}{\hat{x}}
+% \newcommand{\yhat}{\hat{y}}
+% \newcommand{\bxhat}{\hat{\bx}}
+% \newcommand{\byhat}{\hat{\by}}
+% \newcommand{\betahat}{\hat{\beta}}
 
-\DeclareMathOperator{\Bias}{Bias}
-\DeclareMathOperator{\EE}{E}
-\DeclareMathOperator{\Cov}{Cov}
-\DeclareMathOperator{\cov}{cov}
-\DeclareMathOperator{\Var}{Var}
-\DeclareMathOperator{\Mult}{Mult}
-\DeclareMathOperator{\Ber}{Ber}
-\DeclareMathOperator{\var}{var}
-\DeclareMathOperator{\mean}{mean}
-\DeclareMathOperator{\MSE}{MSE}
-\DeclareMathOperator{\SSE}{SSE}
-\DeclareMathOperator{\ESS}{ESS}
-\DeclareMathOperator{\RSS}{RSS}
-\DeclareMathOperator{\TSS}{TSS}
-\DeclareMathOperator{\argmin}{argmin}
-\DeclareMathOperator{\Argmin}{\mathop{\argmin}}
+% \newcommand{\iid}{i.i.d.\ }
+
+% \DeclareMathOperator{\Bias}{Bias}
+% \DeclareMathOperator{\EE}{E}
+% \DeclareMathOperator{\Cov}{Cov}
+% \DeclareMathOperator{\cov}{cov}
+% \DeclareMathOperator{\Var}{Var}
+% \DeclareMathOperator{\Mult}{Mult}
+% \DeclareMathOperator{\Ber}{Ber}
+% \DeclareMathOperator{\var}{var}
+% \DeclareMathOperator{\mean}{mean}
+% \DeclareMathOperator{\MSE}{MSE}
+% \DeclareMathOperator{\SSE}{SSE}
+% \DeclareMathOperator{\ESS}{ESS}
+% \DeclareMathOperator{\RSS}{RSS}
+% \DeclareMathOperator{\TSS}{TSS}
+% \DeclareMathOperator{\argmin}{argmin}
+% \DeclareMathOperator{\Argmin}{\mathop{\argmin}}
 
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{thmdef}[theorem]{Theorem-Definition}
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{thmdef}[theorem]{Theorem-Definition}
 
-\setlength\parskip{1em}
-\setlength\parindent{0em}
+% \setlength\parskip{1em}
+% \setlength\parindent{0em}
 
-\definecolor{orange}{HTML}{FF7F0E}
-\definecolor{green}{HTML}{2CA02C}
-\definecolor{blue}{HTML}{1F77B4}
+% \definecolor{orange}{HTML}{FF7F0E}
+% \definecolor{green}{HTML}{2CA02C}
+% \definecolor{blue}{HTML}{1F77B4}
 
-\DeclareRobustCommand\orangeline{\raisebox{0.5ex}{\tikz \draw[orange, thick] (1, 0) -- (0.5, 0);}}
-\DeclareRobustCommand\blueline{\raisebox{0.5ex}{\tikz \draw[blue, thick] (1, 0) -- (0.5, 0);}}
+% \DeclareRobustCommand\orangeline{\raisebox{0.5ex}{\tikz \draw[orange, thick] (1, 0) -- (0.5, 0);}}
+% \DeclareRobustCommand\blueline{\raisebox{0.5ex}{\tikz \draw[blue, thick] (1, 0) -- (0.5, 0);}}
 
 \begin{document}
 \section{Simple linear regression}
@@ -606,4 +608,165 @@ where $X$ is any $\cX$-valued random variable such that $X\sim P$.
 $\delta$ is an unbiased estimator of $g$ if and only if $\Bias(\delta, g)$ is an unbiased estimator of the zero functional.
 
 Mean bias vs.\ median bias. Exercise?
+
+\section{Logistic regression}
+Define the \emph{sigmoid function}, also called the \emph{expit function} or the \emph{logistic function}, by
+\[
+    \sigma(x) = \frac1{1-e^{-x}}.
+\]
+It maps $\RR$ bijectively onto $(0,1)$. Its inverse is the \emph{logit function}, defined by
+\[
+    \logit(x) = \log\left(\dfrac x{1-x}\right).
+\]
+The logit function maps $(0,1)$ bijectively onto $\RR$.
+
+\[
+    f(t) = y\log\sigma(t) + (1-y)\log(1-\sigma(t))
+\]
+\begin{align*}
+    f' &= y\dfrac{\sigma'}{\sigma} + (y-1)\dfrac{\sigma'}{1-\sigma}\\
+    & = \frac1{\sigma(1-\sigma)}\big[y\sigma'(1-\sigma) + (y-1)\sigma'\sigma\big]\\
+    & =  \frac{\sigma'(y - \sigma)}{\sigma(1-\sigma)}
+\end{align*}
+
+\section{Newton's method}
+\subsection{One variable}
+To refine an approximation $f(a)\approx 0$, we solve
+\[
+    \big(\text{first order approximation to $f(x)$ at $x=a$}\big) = 0.
+\]
+\[
+    f(a) + f'(a)(x-a)=0
+\]
+\[
+    \text{refined approximation} = x = a - \frac{f(a)}{f'(a)}
+\]
+Hence, Newton's recursion:
+\[
+    x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}
+\]
+
+\subsection{Two variables}
+Suppose we want to solve
+\[
+    (f(\vx), g(\vx))=(0,0)=\vzero.
+\]
+To refine an approximate solution $(f(a,b), g(a,b))\approx (0,0)$, we solve the system
+\begin{align*}
+    \big(\text{first order approximation to $f(x, y)$ at $(x,y)=(a,b)$}\big) &= 0\\
+    \big(\text{first order approximation to $g(x, y)$ at $(x,y)=(a,b)$}\big) &= 0.
+\end{align*}
+    
+\begin{align*}
+    f(a,b) + f_x(a,b)(x-a) + f_y(a,b)(y-b)= 0\\
+    g(a,b) + g_x(a,b)(x-a) + g_y(a,b)(y-b)= 0
+\end{align*}
+\[
+    \begin{pmatrix}
+        f(a,b)\\g(a,b)
+    \end{pmatrix}
+    + \begin{pmatrix}
+        f_x(a,b)&f_y(a,b)\\g_x(a,b)&g_y(a,b)
+    \end{pmatrix}
+    \left[\begin{pmatrix}
+        x\\y
+    \end{pmatrix}
+    -\begin{pmatrix}
+        a\\b
+    \end{pmatrix}\right]
+\]
+\begin{align*}
+    \text{refined approximation} = \begin{pmatrix}
+        x\\y
+    \end{pmatrix}
+    &= \begin{pmatrix}
+        a\\b
+    \end{pmatrix}
+    - \begin{pmatrix}
+        f_x(a,b)&f_y(a,b)\\g_x(a,b)&g_y(a,b)
+    \end{pmatrix}^{-1}
+    \begin{pmatrix}
+        f(a,b)\\g(a,b)
+    \end{pmatrix}\\
+    &= \begin{pmatrix}
+        a\\b
+    \end{pmatrix}
+    - \frac1{J_{f,g}(a,b)}
+    \begin{pmatrix}
+        g_y(a,b)&-f_y(a,b)\\-g_x(a,b)&f_x(a,b)
+    \end{pmatrix}
+    \begin{pmatrix}
+        f(a,b)\\g(a,b)
+    \end{pmatrix},
+\end{align*}
+where
+\[
+    J_{f,g}(a,b) = \left|\begin{matrix}
+        f_x(a,b)&f_y(a,b)\\g_x(a,b)&g_y(a,b)
+    \end{matrix}\right|
+    = f_x(a,b)g_y(x,y) - f_y(a,b)g_x(a,b).
+\]
+Hence, Newton's recursion:
+\[
+    \begin{pmatrix}
+        x_{n+1}\\y_{n+1}
+    \end{pmatrix}
+    = \begin{pmatrix}
+        x_n\\y_n
+    \end{pmatrix}
+    - \frac1{|J_{f,g}(x_n,y_n)|}
+    \begin{pmatrix}
+        g_y(x_n,y_n)&-f_y(x_n,y_n)\\-g_x(x_n,y_n)&f_x(x_n,y_n)
+    \end{pmatrix}
+    \begin{pmatrix}
+        f(x_n,y_n)\\g(x_n,y_n).
+    \end{pmatrix}
+\]
+
+\subsection{Application to simple logistic regression}
+\[
+    \ell(a,b) = \text{$\log$-likelihood}
+\]
+To maximize $\ell(a,b)$, we solve
+\[
+    \nabla \ell(a,b) = \begin{pmatrix}
+        \dfrac{\partial \ell}{\partial a}\\[1.25em]\dfrac{\partial \ell}{\partial b}
+    \end{pmatrix} = \begin{pmatrix}
+        0\\0
+    \end{pmatrix}.
+\]
+We apply the above with $f=\dfrac{\partial \ell}{\partial a}$ and $g=\dfrac{\partial \ell}{\partial b}$.
+In this case, the intervening matrix is the \emph{Hessian matrix} of $\ell$:
+\[
+    H_\ell=\begin{pmatrix}
+        \dfrac{\partial^2\ell}{\partial a^2}&\dfrac{\partial^2\ell}{\partial a\partial b}\\[1.5em]
+        \dfrac{\partial^2\ell}{\partial b\partial a}&\dfrac{\partial^2\ell}{\partial b^2}
+    \end{pmatrix}.
+\]
+Newton's recursion becomes:
+\[
+    \begin{pmatrix}
+        a_{n+1}\\b_{n+1}
+    \end{pmatrix}
+    = \begin{pmatrix}
+        a_{n}\\b_{n}
+    \end{pmatrix} - H_\ell(a_n, b_n)^{-1}\nabla\ell(a_n, b_n)
+\]
+By equality of mixed partials, the \emph{Hessian (determinant)} of $\ell$ is given by:
+\[
+    J_{\nabla \ell} = \dfrac{\partial^2\ell}{\partial a^2}\,\dfrac{\partial^2\ell}{\partial b^2}
+    - \dfrac{\partial^2\ell}{\partial a\partial b}
+\]
+\subsection{$n$-variables}
+\[
+    \vx_{n+1} = \vx_n - \vf'(\vx_n)^{-1}\vf(\vx_n),
+    \quad\text{where}\quad 
+    \vf'(\vx) = 
+    \begin{pmatrix}
+        \dfrac{\partial f_i}{\partial x_j}(\vx)
+    \end{pmatrix}_{i,j=1,\ldots,n}.
+\]
+
+
+
 \end{document}

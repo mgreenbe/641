@@ -1,0 +1,37 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(latex2exp)
+n <- 4
+x <- seq(from=0, to=1.5, by=0.01)
+v <- 2*x^2/(n-1)
+b <- (x-1)^2
+m <- v + b
+plot(x, v, col="violet", type="l", lty="dotted", lwd=3, ylim=c(0, 1.8), xlab=expression(italic("b")), ylab="")
+title(main="Bias-Variance Decomposition 1")
+lines(x, b, col="blue", lty="dashed", lwd=3)
+lines(x, m, col="black", lty="solid", lwd=3)
+legend(0, 1.75, legend=c("mean squared error", "bias", "variance"),
+       col=c("black", "blue", "violet"), lty=c("solid", "dashed", "dotted"), lwd=c(3, 3, 3))
+dev.print(pdf, 'bias-variance-decomposition-1.pdf')
+```
+```{r}
+n <- 5
+a <- 1/sqrt(2*pi)
+h <- seq(from=1, to=4, by=0.01)
+v <- a/(n*h)
+b2 <- a^2*h^4/576
+m <- b2 + v
+plot(h, v, col="violet", type="l", lty="dotted", lwd=3, ylim=c(0, 0.1), xlab=expression(italic("h")), ylab="")
+title(main="Bias-Variance Decomposition 2")
+lines(h, b2, col="blue", lty="dashed", lwd=3)
+lines(h, m, col="black", lty="solid", lwd=3)
+legend(1.3, 0.1, legend=c("mean squared error", "bias", "variance"),
+       col=c("black", "blue", "violet"), lty=c("solid", "dashed", "dotted"), lwd=c(3, 3, 3))
+dev.print(pdf, 'bias-variance-decomposition-2.pdf')
+```
+
+

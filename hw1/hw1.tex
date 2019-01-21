@@ -1,0 +1,165 @@
+\documentclass[12pt]{amsart}
+
+\input{../macros.tex}
+
+\begin{document}
+    \title{STAT 543/641 -- Winter 2019 -- Homework \#1}
+
+    \author{Due February 11, 2019}
+    \maketitle
+
+    \begin{enumerate}
+        \setlength\itemsep{1em}
+        \item Let $P$ be a disribution on $\RR$ with variance $\sigma^2$
+        Let $X_1,\ldots,X_n$ be a random sample from $P$ and let $S^2$ be
+        the associated unbiased estimator of $\sigma^2$:
+        \[
+            S^2 = \frac1{n-1}\sum_{i=1}^n (X_i-\bar X)^2.
+        \]
+        Show that
+        \[\Var S^2 = \dfrac{2\sigma^4}{n-1}.\]
+        Feel free to ``cheat'' and use the fact that
+        \[\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.\]
+        (Can you do it without ``cheating''?)
+
+        \item 
+        \begin{enumerate}
+            \setlength{\itemsep}{0.5em}
+            \item Let $\tilde{x}$ be the median of $x_1,\ldots,x_n$, $n$ odd. Prove that the identity
+            \[\sum_{i=1}^n|x_i-z| = \min_{y\in\RR} \sum_{i=1}^n|x_i-y|\]
+            holds if and only if $z=\tilde x$.
+            \item Let $X_1,\ldots,X_n$ be a random sample from $\cL(\mu, b)$, where $\cL(\mu, b)$
+            is the \emph{Laplace distribution} with density
+            \[f(x|\mu, b) = \frac1{2b^2}e^{-|x-\mu|/b}.\]
+            Assuming that $b$ is known and that $n$ is odd, Show that the MLE of $\mu$
+            is the sample median, $\tilde{X}$. (Hint: Use (a).)
+        \end{enumerate}
+
+        \item \cite[Exercise 7.1.3]{HMC} Let $Y_1< Y_2< Y_3$ be the order statistics of
+        a random sample of size three drawn from the uniform distribution having density function
+    \[f(x|\theta)=\begin{cases}
+    1/\theta&\text{if $0<x<\theta$}\\
+     0&\text{otherwise,}
+    \end{cases}\]
+    where $\theta>0$. Show that $4Y_1$, $2Y_2$, and $\frac43Y_3$ are all unbiased estimators of $\theta$.
+    Find the variance of each of these estimators.
+
+    \item Suppose that
+    \[
+(X,Y)\sim N((\mu_X, \mu_Y), \Sigma),\quad\text{where}\quad
+\Sigma=\begin{pmatrix}\sigma_X^2&\rho\sigma_X\sigma_Y\\\rho\sigma_X\sigma_Y&\sigma_Y^2\end{pmatrix}.
+    \]
+    \begin{enumerate}
+        \setlength{\itemsep}{0.5em}
+        \item Write down the conditional density of $Y$ given $X$.
+        \item Show that $\EE[Y|X]$ is has the form $a+bX$.
+        Express $a$ and $b$ in terms of $\mu_X$, $\mu_Y$, $\sigma_X$, $\sigma_Y$, and $\rho$.
+        (Hint: Use (a).)
+        \item Confirm your answer to (b) experimentally by finding the least-squares line for data
+        sampled from a bivariate normal distribution with randomly generated mean and
+        covariance matrix. 
+    \end{enumerate}
+
+    \item Let $x_0,x_1,\ldots,x_n\in\RR$, let $\epsilon_0,\epsilon_1,\ldots,\epsilon_n$ be independent 
+    normally distributed random variables with common mean $0$ and common variance $\sigma^2$,
+    and suppose
+    \[
+        Y_i = a + bx_i + \epsilon_i,\quad i=0,1,\ldots,n.
+    \]
+    Recall our notation:
+    \[
+        \bar x = \frac1n\sum_{i=1}^n x_i,\quad \bar y = \frac1n\sum_{i=1}^n y_i
+    \]
+    \[
+        S_{xx} = \sum_{i=1}^n (x_i - \bar x)^2,\quad
+        S_{xy} = \sum_{i=1}^n(x_i-\bar x)(y_i - \bar y),\quad
+        S_{xY} = \sum_{i=1}^n(x_i-\bar x)(Y_i - \bar Y)
+    \]
+    Let $\hat b$, $\hat a$, and $\hat \sigma^2$ be the maximum likelihood estimators of
+    $b$, $a$, and $\sigma^2$, respectively:
+    \begin{align*}
+        \hat{b}=\hat{b}(Y_1,\ldots,Y_n) &= \frac{S_{xY}}{S_{xx}},\\
+        \hat{a}=\hat{a}(Y_1,\ldots,Y_n) &=   \bar Y - \hat b\, \bar x,\\
+        \hat{\sigma}^2=\hat{\sigma}^2(Y_1,\ldots,Y_n)
+        &= \frac 1 n\sum_{i=1}^n (Y_i - \hat a - \hat b x_i)^2.
+    \end{align*}
+    Note that these expressions involve only the \emph{training data} $(x_1,Y_1),\ldots,(x_n,Y_n)$.
+    They omit the \emph{test data} $(x_0, Y_0)$.
+    
+    The training error of our regression model is
+    \[
+        \MSE_\text{train} = \EE\left[\frac1n\sum_{i=1}^n \big(Y_i -(\hat a + \hat b x_i)\big)^2\right],
+    \]
+    while its test (prediction) error is
+    \[
+        \MSE_{\text{test}} = \EE\left[\big(Y_0 - (\hat a + \hat b x_0)\big)^2\right].
+    \]
+    
+    We know that
+    \[
+        \MSE_{\text{train}} = \EE\left[\hat{\sigma}^2\right] = \frac{n-2}n\sigma^2.
+    \]
+    
+    In this exercise, we prove
+    \[
+        \MSE_{\text{test}} = \left(1 + \frac1n + \frac{(x_0-\bar x)^2}{S_{xx}} \right)\sigma^2.
+    \]
+    Note that
+    \[
+        \MSE_\text{train}\leq  \MSE_{\text{test}},
+    \]
+    as one would expect (why?).
+    
+    \begin{enumerate}
+        \setlength\itemsep{0.5em}
+        \item\label{I:lin_combs} Show that
+        \[
+            \hat b = \sum_{i=1}^n d_i Y_i\quad\text{and}\quad
+            \hat a = \sum_{i=1}^n c_i Y_i,
+        \]
+        where
+        \[
+            d_i=\frac{(x_i-\bar x)}{S_{xx}}\quad\text{and}\quad
+            c_i = \frac1n - \frac{\bar x(x_i - \bar x)}{S_{xx}}.
+        \]
+
+        \item\label{I:unbiased} Prove that $\hat b$ and $\hat a$ are unbiased estimators of $b$ and $a$, respectively. (Hint: Use (\ref{I:lin_combs}).)
+        
+        \item\label{I:variances} Establish the following identities:
+        \[
+            \Var\hat b = \frac1{S_{xx}}\sigma^2,\quad
+            \Var\hat a = \left(\frac1{nS_{xx}}\sum_{i=1}^n x_i^2\right)\sigma^2,\quad
+            \Cov(\hat a, \hat b) = -\frac{\bar x}{S_{xx}}\sigma^2
+        \]
+        (Hint: Use (\ref{I:lin_combs}) and the independence of $Y_1,\ldots,Y_n$.)
+        
+        \item What are the distributions of $\hat b$ and $\hat a$? (Hint: Use~(\ref{I:unbiased}) and~(\ref{I:variances}).)
+        
+        \item Establish the following identities:
+        \[
+            \EE[\hat a + \hat b x_0],\quad \Var(\hat a + \hat b x_0) = \left(\frac1n + \frac{(x_0-\bar x)^2}{S_{xx}} \right)\sigma^2.
+        \]
+        What is the distribution of $\hat a + \hat b x_0$?
+        (Hint: For the variance, use~(\ref{I:variances}). The calculation is a bit tricky; if you get stuck, see~\cite[\S11.3.5]{CB}.)
+        
+        \item\label{I:test_variance} Prove that
+        \[
+            \EE\left[\big(Y_0 - \hat a - \hat b x_0\big)^2\right] = \left(1 + \frac1n + \frac{(x_0-\bar x)^2}{S_{xx}} \right)\sigma^2.
+        \]
+        (Hint: Use the fact that $Y_0$ and $\hat a + \hat b x_0$ are independent (why?) and~(\ref{I:test_variance}).)
+    \end{enumerate}
+
+
+    \end{enumerate}
+
+
+    
+
+
+    \begin{thebibliography}{99}
+        \bibitem{CB}Casella, Bergger, \emph{Statistical Inference (2nd ed.)}, Duxbury, 2002.
+        \bibitem{HMC}Hogg, McKean, Craig, \emph{Introduction to Mathematical Statistics (7th ed.)}, Pearson, 2013.
+    \end{thebibliography}
+
+
+\end{document}

@@ -7,18 +7,19 @@ output: html_notebook
 varx <- 9
 covxy <- 1
 vary <- 4
-xbar <- 2
-ybar <- 3
+meanx <- 2
+meany <- 3
 slope <- covxy/varx
-intercept <- ybar - slope*xbar
+intercept <- meany - slope*meanx
 covariance <- matrix(c(varx, covxy, covxy, vary), nrow=2);
-center <- c(xbar, ybar)
+means <- c(meanx, meany)
 
 n <- 100000
-xy <- mvtnorm::rmvnorm(n, center, covariance)
-x <- xy[1:n, 1]
-y <- xy[1:n, 2]
+xy <- mvtnorm::rmvnorm(n, means, covariance)
+x <- xy[ , 1]
+y <- xy[ , 2]
 lm(y ~ x)
 slope
 intercept
 ```
+blah
