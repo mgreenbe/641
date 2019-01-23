@@ -767,6 +767,94 @@ By equality of mixed partials, the \emph{Hessian (determinant)} of $\ell$ is giv
     \end{pmatrix}_{i,j=1,\ldots,n}.
 \]
 
+\section{Convexity}
+\begin{equation}\label{E:sigmoid_DE}
+    \sigma'(x) = \sigma(x)(1-\sigma(x))
+\end{equation}
+\[
+    \ell(\theta) = \sum_{i=1}^n\ell_i(\theta),
+\]
+where
+\[
+    \ell_i(\theta) = y^{(i)}\log\sigma(\vtheta^T\vx^{(i)})
+    + (1-y^{(i)})\log(1-\sigma(\vtheta^T\vx^{(i)}))
+\]
+\begin{align*}
+    \frac{\partial \ell_i}{\partial \theta_j}
+    &= y^{(i)}\frac{\sigma'(\vtheta^T\vx)}{\sigma(\vtheta^T\vx)}x^{(i)}_j
+    - (1-y^{(i)})\frac{\sigma'(\vtheta^T\vx)}{1-\sigma(\vtheta^T\vx)}x^{(i)}_j\\
+    &= y^{(i)}(1-\sigma(\vtheta^T\vx))x^{(i)}_j
+    - (1-y^{(i)})\sigma(\vtheta^T\vx)x^{(i)}_j\\
+    &= (y^{(i)} - \sigma(\vtheta^T\vx))x^{(i)}_j
+\end{align*}
 
+\begin{align*}
+    \frac{\partial^2 \ell_i}{\partial \theta_j\partial\theta_k}
+    &= -\sigma'(\vtheta^T\vx^{(i)})x^{(i)}_jx^{(i)}_k
+\end{align*}
 
+\begin{align*}
+    \frac{\partial^2 \ell}{\partial \theta_j\partial\theta_k}
+    &= -\sum_{i=1}^n\sigma'(\vtheta^T\vx^{(i)})x^{(i)}_jx^{(i)}_k
+\end{align*}
+Let
+\[
+X = \begin{pmatrix}
+    x_j^{(i)}
+\end{pmatrix}\in\RR^{n\times p},\quad    
+D = \diag\big(\sigma'(\theta^T\vx^{(1)}),\ldots,\sigma'(\theta^T\vx^{(n)})\big).
+\]
+
+Then
+\[
+H_\ell(\theta) = X^TDX.
+\]
+
+\section{Gradient descent}
+
+\[
+    \vtheta^{(n+1)} = \vtheta^{(n)} - \alpha \nabla f(\vtheta^{(n)})^T
+\]
+\[
+f(\vx) \leq f(\va) + \nabla f(\va)(\vx-\va) + (\vx - \va)^T\nabla^2 f(\va)(\vx - \va)
+\]
+
+Descent lemma: Let $g(t) = f(\vx + t\vy)$
+\begin{align*}
+    f(\vx + \vy) - f(\vx) &=g(1) - g(0)\\ 
+    &= \int_0^1 g'(t)\,dt\\
+    &= \int_0^1\nabla f(\vx + t \vy)\vy\,dt\\
+    &= \int_0^1\big(f(\vx) + \nabla f(\vx + t \vy) - f(\vx)\big)\vy\,dt\\
+    &= \int_0^1\nabla f(\vx)\vy\,dt + \int_0^1\big(\nabla f(\vx + t \vy) - \nabla f(\vx)\big)\vy\,dt\\
+    &\leq \nabla f(\vx)\vy + \int_0^1\left\|\nabla f(\vx + t \vy) - \nabla f(\vx)\right\|\|\vy\|\,dt\\
+    &\leq \nabla f(\vx)\vy + \int_0^1 L\left\|t\vy\right\|\|\vy\|\,dt\\
+    &= \nabla f(\vx)\vy + \frac{L}2\|\vy\|^2 
+\end{align*}
+Replace $\vy$ by $\vy - \vx$:
+\[
+    f(\vy) \leq f(\vx) + \nabla f(\vx)(\vy - \vx) + \frac L 2\|\vy - \vx\|^2
+\]
+
+\[
+    \vx_{n+1} = \vx_n - \frac1L\nabla f(\vx_n)^T
+\]
+\[
+    f(x_{n+1})\leq f(x_n) - \frac1L \|\nabla f(x_n)\|^2 + \frac1{2L} \|\nabla f(x_n)\|^2 
+    = f(x_n) - \frac1{2L} \|\nabla f(x_n)\|^2
+\]
+Being a decreasing sequence that is bounded below, $f(x_n)$ converges.
+
+\[
+    f(x_0) - f(x_n) = \sum_{k=0}^{n-1} \big(f(x_k) - f(x_{k+1})\big)
+    \geq \frac1{2L}\sum_{k=0}^{n-1}\|\nabla f(x_k)\|^2
+\]
+\[
+    n\min_{k<n} \|\nabla f(x_k)\|^2 \leq\sum_{k=0}^{n-1}\|\nabla f(x_k)\|^2\leq 2L(f(x_0) - f(x_n))\leq 2L(f(x_0) - f(x_\infty))
+\]
+\[
+    \min_{k<n} \|\nabla f(x_k)\|^2\leq \frac{2L(f(x_0) - f(x_\infty))}{n} = O(1/n)
+\]
+\[
+    \liminf_{n\to\infty} \|\nabla f(x_k)\|^2 = 0.
+\]
 \end{document}
