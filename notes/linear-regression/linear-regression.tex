@@ -857,4 +857,33 @@ Being a decreasing sequence that is bounded below, $f(x_n)$ converges.
 \[
     \liminf_{n\to\infty} \|\nabla f(x_k)\|^2 = 0.
 \]
+
+\subsection{Lipschitz constant for $\MSE$}
+
+Consider the mean square error function for simple linear regression with data set
+$(x_1, y_1), \ldots, (x_n, y_n)$:
+\[
+    f(a,b) = \frac1n\sum_{i=1}^n (a + bx_i - y_i)^2
+\]
+Then
+\[
+\nabla f(a,b) = \frac1n\sum_{i=1}^n 2(a + bx_i - y_i)\begin{pmatrix}1&x_i\end{pmatrix}
+\]
+\begin{align*}
+    \nabla f(a,b) - \nabla f(a', b') &= \frac2n\sum_{i=1}^n((a-a') + (b-b')x_i)
+    \begin{pmatrix}1&x_i\end{pmatrix}
+    \intertext{Therefore,}
+    \|\nabla f(a,b) - \nabla f(a', b')\| &\leq \frac2n\sum_{i=1}^n|(a-a') + (b-b')x_i|
+    \sqrt{1+x_i^2}\\
+    &\leq \frac2n\big(|a-a'| + |b-b'|\big)\sum_{i=1}^n\max\{1, |x_i|\}\sqrt{1+x_i^2}\\
+    &\leq \frac{2\sqrt{2}}n \sqrt{(a-a')^2 + (b-b')^2}\sum_{i=1}^n\max\{1, |x_i|\}\sqrt{1+x_i^2}\\
+    &= L\|(a,b) - (a', b')\|,
+    \intertext{where}
+    L &= \frac{2\sqrt{2}}n \sum_{i=1}^n\max\{1, |x_i|\}\sqrt{1+x_i^2}
+\end{align*}
+
+\[
+    L\leq \frac4n\sum_{i=1}^n(1+x_i^2) = 4\left(1 + \frac{S_{xx}}n\right)
+\]
+
 \end{document}

@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1548112468 "/Users/mgreenbe/teaching/2019-winter/641/notes/linear-regression/linear-regression.tex" "linear-regression.pdf" "linear-regression" 1548112468
+["pdflatex"] 1548359700 "/Users/mgreenbe/teaching/2019-winter/641/notes/linear-regression/linear-regression.tex" "linear-regression.pdf" "linear-regression" 1548359701
   "/../../macros.tex" 0 -1 0 ""
-  "/Users/mgreenbe/teaching/2019-winter/641/notes/linear-regression/linear-regression.tex" 1548112467 30020 2e6f5f1fc8d2b29751416009d7edc5df ""
+  "/Users/mgreenbe/teaching/2019-winter/641/notes/linear-regression/linear-regression.tex" 1548359699 31009 d941be26a9c141a8b7b897593f879b0f ""
   "/grid.pdf" 0 -1 0 ""
   "/linear-regression.aux" 0 -1 0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -159,12 +159,12 @@
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1523934516 4220280 10cab8fbd7c5a7c52aba9917e190d018 ""
   "/usr/local/texlive/2018/texmf.cnf" 1523934483 577 0b39adfd7c93507ff20c9c14c2f1a33f ""
   "grid.pdf" 1544726365 19566 6bb8ea8fb506a0032953900ba14917ab ""
-  "linear-regression.aux" 1548112468 1932 8e7d2b15c123677bfdb8521f83871f95 ""
-  "linear-regression.tex" 1548112467 30020 2e6f5f1fc8d2b29751416009d7edc5df ""
+  "linear-regression.aux" 1548359701 2038 85b8ae2f35de6e8c174a1317a55348e4 ""
+  "linear-regression.tex" 1548359699 31009 d941be26a9c141a8b7b897593f879b0f ""
   (generated)
-  "/linear-regression.pdf"
-  "linear-regression.aux"
-  "linear-regression.log"
   "/linear-regression.log"
   "linear-regression.pdf"
+  "/linear-regression.pdf"
   "/linear-regression.aux"
+  "linear-regression.log"
+  "linear-regression.aux"
