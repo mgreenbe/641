@@ -1,0 +1,211 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{mathrsfs, fullpage, amsmath, amssymb, graphicx, xcolor, tikz}
+
+\input{../../macros.tex}
+
+\begin{document}
+\title{Regularization}
+\maketitle
+
+\section{Multiple linear regression}
+Convention: We view $\RR^k$ as a subset of $\RR^{k+1}$ via the following identification
+\begin{equation}\label{E:identification}
+    v\in\RR^k\quad\longleftrightarrow\quad (1, v)\in\RR^{k+1}.
+\end{equation}
+    
+$p-1$ predictor variables:
+\[
+(x_1, y_1),\ldots,(x_n, y_n)\in \RR^{1\times (p-1)}\times \RR
+\]
+
+Viewing $x_i$ as an element of $\RR^{1\times p}$ via~\eqref{E:identification}, define:
+\[
+    x := \begin{bmatrix}x_1\\\vdots\\x_n\end{bmatrix}\in\RR^{n\times p},
+    \quad y := \begin{bmatrix}
+        y_1\\\vdots\\y_n
+    \end{bmatrix}\in\RR^{n\times 1}
+\]
+For $\beta\in\RR^{p\times 1}$, consider the equation:
+\[
+    x\beta = y
+\]
+Equivalently:
+\[
+    \beta_0 + \beta_1x_{i,1} + \cdots \beta_{p-1}x_{i,p-1} = y_i,\quad i=1,\ldots,n.
+\]
+
+\textbf{Recall:}
+The \emph{column space of $x$} is the subspace $C(x)$ of $\RR^{n\times 1}$
+characterized by any of the following equivalent conditions:
+\begin{itemize}\setlength\itemsep{0.5em}
+    \item $C(x)$ is the set of all linear combinations of the columns of $x$
+    \item $C(x)=\{x\beta : \beta\in\RR^{p\times 1}\}$
+    \item $C(x)=\{y\in\RR^{n\times 1} : \text{$x\beta=y$ has a solution}\}$
+\end{itemize}
+$C(x)$ is also called the \emph{image of $x$}.
+
+Let $\hat y\in\RR^{n\times 1}$ be the vector characterized by any of the
+equivalent conditions:
+\begin{itemize}\setlength\itemsep{0.5em}
+    \item $\displaystyle{\hat y = \argmin\limits_{z\in C(x)}\|z - y\|}$
+    \item $\hat y$ is the vector in the column space of $x$ closest to $y$.
+    \item $\hat y$ is the orthogonal projection of $y$ onto the column space of $x$.
+\end{itemize}
+In partricular, $x\beta = \hat y$ has a solution.
+
+\section{The case $\rank(x)=p$}
+Suppose $\rank(x)=p$. Then $\beta\mapsto x\beta$ maps $\RR^{p\times 1}$
+bijectively onto $C(x)$ and, therefore, there is a unique vector $\hat\beta\in\RR^{p\times 1}$
+--- the \emph{least squares solution of} $x\beta=y$ --- such that
+\[
+    x\hat\beta = \hat y.
+\]
+The vector $\hat\beta$ is characterized by the fact that it minimizes
+the sum of squared errors in approximating $y$ by a vector of the form $x\beta$:
+\[
+    \hat \beta = \argmin_{\beta \in \RR^{p\times 1}}\|x\beta - y\|^2
+\]
+
+Since $\rank(x)=p$, the matrix $x^Tx\in\RR^{p\times p}$ is invertible and the system
+\[
+    x^Tx\beta = x^Ty
+\]
+has unique solution; this solution is just $\hat\beta$:
+\[
+    \hat \beta = (x^Tx)^{-1}x^Ty
+\]
+Thus,
+\[
+\hat y = x\hat \beta = Py,
+\]
+where
+\[
+    P := x(x^Tx)^{-1}x^T.
+\]
+The matrix $P$ is called the \emph{projection matrix} because it describes
+orthogonal projection from $\RR^{n\times 1}$ onto $C(x)$.
+
+If we view the $y_i$ as realizations of random variable $Y_i$ and let
+\[
+    Y = \begin{bmatrix}
+        Y_1\\\vdots\\Y_n,
+    \end{bmatrix}
+\]
+then we may view 
+\[
+    \hat\beta = \hat\beta(Y_1,\ldots,Y_n) = (x^Tx)^{-1}x^T Y
+\]
+as an estimator.
+
+\begin{theorem}
+    Suppose $\rank(x)=p$ and
+    \[
+        Y\sim N(x\beta, \Sigma).
+    \]
+    Then $\hat\beta$ is an unbiased estimator of $\beta$.
+\end{theorem}
+\begin{proof} Use the linearity of expectation:
+    \begin{multline*}
+        \qquad\qquad\EE\hat \beta 
+        = \EE\left[(x^Tx)^{-1}x^TY\right] 
+        = (x^Tx)^{-1}x^T\EE Y
+        \\= (x^Tx)^{-1}x^T (x\beta) 
+        = (x^Tx)^{-1}(x^T x)\beta 
+        = I\beta 
+        = \beta\qquad\qquad\qedhere
+    \end{multline*}        
+\end{proof}
+
+\begin{align*}
+    \Var\hat\beta &= \Var (x^Tx)^{-1}x^TY\\
+    &= (x^Tx)^{-1}x^T(\Var Y)((x^Tx)^{-1}x^T)^T\\
+    &= (x^Tx)^{-1}x^T(\sigma^2I)x(x^Tx)^{-1}\\
+    &= \sigma^2(x^Tx)^{-1}(x^Tx)(x^Tx)^{-1}\\
+    &= \sigma^2(x^Tx)^{-1}
+\end{align*}
+
+
+
+\section{The case $\rank(x)\leq p$}
+
+We consider a \emph{regularized} version of multiple linear regression.
+Let $\lambda > 0$ and consider the problem of minimizing 
+\[
+    \SSE_\lambda(\beta) := \|x\beta - y\|^2 + \lambda^2\|\beta\|^2
+\]
+Let
+\[
+    \xi\ := \begin{bmatrix}
+        x\\\lambda I^{p\times p}
+    \end{bmatrix}\in\RR^{(n + p)\times p},
+    \quad
+    \eta := \begin{bmatrix}
+        y\\0^{p\times 1}
+    \end{bmatrix}\in\RR^{(n+p)\times 1}
+\]
+and consider the equation
+\[
+    \xi\beta = \eta.
+\]
+The columns of $\xi$ are linearly independent (why?),
+so $\rank(\xi)=p$.
+Therefore, by the discussion of the previous section,
+$\xi^T\xi$ is invertible and 
+\[
+    \hat{\beta}_\lambda := (\xi^T\xi)^{-1}\xi^T\eta
+\]
+minimizes
+\[
+    \|\xi\beta - \eta\|^2 = \left\|\begin{bmatrix}
+        x\beta - y\\\lambda\beta
+    \end{bmatrix}\right\|^2 = \|x\beta - y\|^2 + \lambda^2\|\beta\|^2
+    = \SSE_\lambda(\beta).
+\]
+
+We have:
+\begin{align*}
+    \xi^T\xi &= \begin{bmatrix}
+        x^T&&\lambda I
+    \end{bmatrix}\begin{bmatrix}
+        x\\\lambda I
+    \end{bmatrix}\\
+    &= x^Tx + \lambda^2I,\\
+    \xi^T\eta &= \begin{bmatrix}
+        x^T&&\lambda I
+    \end{bmatrix}
+    \begin{bmatrix}
+        y\\0^{p\times 1}
+    \end{bmatrix}\\
+    &= x^Ty
+\end{align*}
+
+Therefore,
+\[
+    \hat\beta_\lambda = (x^Tx + \lambda^2I)^{-1}x^Ty.
+\]
+
+Let
+\[
+    W_\lambda = (x^Tx + \lambda^2I)^{-1}x^Tx.
+\]
+
+\begin{theorem}
+    Suppose $\rank(x)=p$, so that $\hat\beta$ is defined. Then
+    \[
+        \beta_\lambda = W_\lambda\hat\beta.
+    \]
+\end{theorem}
+
+\begin{proof} Just compute.
+    \begin{align*}
+        W_\lambda\hat\beta
+        &= (x^Tx + \lambda^2I)^{-1}x^Tx\hat\beta\\
+        &= (x^Tx + \lambda^2I)^{-1}x^Tx(x^Tx)^{-1}x^T y\\
+        &= (x^Tx + \lambda^2I)^{-1}x^T y\\
+        &= \hat\beta_\lambda.\qedhere
+    \end{align*}
+\end{proof}
+
+
+\end{document}

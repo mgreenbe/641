@@ -1,0 +1,66 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{mathrsfs, fullpage, amsmath, amssymb, graphicx, xcolor, tikz}
+
+\input{../../macros.tex}
+
+\DeclareMathOperator{\softmax}{softmax}
+\begin{document}
+\section{Logistic regression}
+
+\subsection{Conditional multinomial model}
+\[
+    \log\frac{\PP(Y=k|X)}{\PP(Y=0|X)} = \beta_k^T X,\qquad k=1,\ldots,K-1\\
+\]
+Equivalently,
+\[
+    \PP(Y=k|X) = \PP(Y=0|X) e^{\beta_k^T X}
+\]
+Sum the above equations for $k=1,\ldots,K-1$:
+\[
+    \sum_{k=1}^{K-1}\PP(Y=k|X) = \PP(Y=K|X) \sum_{k=1}^{K-1}e^{\beta_k^T X}
+\]
+But
+\[
+    \sum_{k=1}^{K-1}\PP(Y=k|X) = 1 - \PP(Y=0|X).
+\]
+Therefore,
+\begin{align*}
+    1 - \PP(Y=0|X) &= \PP(Y=0|X) \sum_{k=1}^{K-1}e^{\beta_k^T X}\\
+\PP(Y = 0|X) = \dfrac1{{1+\sum_{k=1}^{K-1}e^{\beta_k^T X}}}
+\end{align*}
+Therefore,
+\[
+    \PP(Y=k|X) = \dfrac{e^{\beta_k^T X}}{{1+\sum_{k=1}^{K-1}e^{\beta_k^T X}}}
+\]
+
+When $K=2$,
+\[
+    \PP(Y=1|X) = \dfrac{e^{\beta_1^T X}}{{1+e^{\beta_1^T X}}} = \sigma(\beta_1X)
+\]
+and we recover binary logistic regression.
+
+\[
+p(y|\theta_1,\ldots,\theta_{K-1}) 
+= \theta_0^{y_0}\theta_1^{y_1}\cdots\theta_K^{y_k},
+\quad \theta_0 = 1-\sum_{k=1}^{K-1}\theta_k
+\]
+\[
+    \ell(\theta) = \sum_{k=0}^{K-1}y_k\log\theta_k
+\]
+\[
+    \theta_k = \sigma(\beta_k^T x)
+\]
+\[
+\dfrac1{{1+\sum_{k=1}^{K-1}e^{\beta_k^T x}}}\begin{pmatrix}
+    1, e^{\beta_1^Tx},\ldots,e^{\beta_{K-1}^Tx}
+\end{pmatrix}\in\Delta_{K-1}
+\]
+\[
+    \softmax(t_0,\ldots,t_n) = \frac1{e^{t_0}+\cdots + e^{t_n}}
+    \begin{pmatrix}
+        e^{t_0},\ldots,e^{t_n}
+    \end{pmatrix}\in\Delta_n
+\]
+
+\end{document}
