@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1548560558 "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.tex" "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.pdf" "regularization" 1548560559
-  "../../macros.tex" 1548526162 3134 09bea8d022662f90dd6e2560db4261c9 ""
-  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.aux" 1548560559 461 c49386c222cc17ee58044f74d01cec48 ""
-  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.tex" 1548560557 5666 d7d4595e7d0f57e23f6178887bfacd5f ""
+["pdflatex"] 1548803193 "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.tex" "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.pdf" "regularization" 1548803194
+  "../../macros.tex" 1548791849 3209 0b8ac8ffc44c1fc731200017a92e01c9 ""
+  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.aux" 1548803194 720 51de631ffe808614b5792c6ab52b51f0 ""
+  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.tex" 1548803192 14783 debe9aba05d175165588fb5164cbbe76 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -26,6 +26,8 @@
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1480098701 1116 933a60c408fc0a863a92debe84b2d294 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1480098701 1120 8b7d695260f3cff42e636090a8002094 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti12.tfm" 1480098701 1484 ed72f8f5cf654cda15ecc8e32bfcbee5 ""
+  "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti7.tfm" 1480098701 1492 86331993fe614793f5e7e755835c31c5 ""
+  "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/cm/cmti8.tfm" 1480098701 1504 1747189e0441d1c18f3ea56fafc1c480 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm" 1480098717 688 37338d6ab346c2f1466b29e195316aa4 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/rsfs/rsfs5.tfm" 1480098717 684 3a51bd4fd9600428d5264cf25f04bb9a ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/rsfs/rsfs7.tfm" 1480098717 692 1b6510779f0f05e9cbf03e0f6c8361e6 ""
@@ -144,11 +146,11 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1523934492 2717033 f61a5287d9c22a39a74f1979fe3f905c ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1523934516 4220280 10cab8fbd7c5a7c52aba9917e190d018 ""
   "/usr/local/texlive/2018/texmf.cnf" 1523934483 577 0b39adfd7c93507ff20c9c14c2f1a33f ""
-  "regularization.aux" 1548560559 461 c49386c222cc17ee58044f74d01cec48 ""
-  "regularization.tex" 1548560557 5666 d7d4595e7d0f57e23f6178887bfacd5f ""
+  "regularization.aux" 1548803194 720 51de631ffe808614b5792c6ab52b51f0 ""
+  "regularization.tex" 1548803192 14783 debe9aba05d175165588fb5164cbbe76 ""
   (generated)
   "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.log"
-  "regularization.log"
   "regularization.pdf"
-  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.pdf"
+  "regularization.log"
   "regularization.aux"
+  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.pdf"

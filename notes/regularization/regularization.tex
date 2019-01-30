@@ -2,6 +2,8 @@
 
 \usepackage{mathrsfs, fullpage, amsmath, amssymb, graphicx, xcolor, tikz}
 
+\newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+
 \input{../../macros.tex}
 
 \begin{document}
@@ -207,5 +209,328 @@ Let
     \end{align*}
 \end{proof}
 
+\[
+    E = (a + bx - y)^2 + \lambda(a^2 + b^2)
+\]
 
+\begin{align*}
+    E_x = 0 && (1 + \lambda)a + xb &= y\\
+    E_y = 0 && xa + (x^2+\lambda)b &= xy
+\end{align*}
+Solution:
+\[
+    \hat a = \frac y{1+\lambda + x^2},\qquad
+    \hat b = \frac {xy}{1+\lambda + x^2}
+\]
+
+\[
+    \lambda = 0:\qquad \begin{bmatrix}
+        \hat a\\\hat b
+    \end{bmatrix} = \frac y{1+x^2}\begin{bmatrix}
+        1\\x
+    \end{bmatrix}\in C\left(\begin{bmatrix}1 & x\end{bmatrix}^T\right)
+\]
+
+\[
+    \begin{bmatrix}
+        \hat a\\\hat b
+    \end{bmatrix}
+    = \frac y{1+x^2}\begin{bmatrix}
+        1\\x
+    \end{bmatrix}
+    \quad\text{is the least squares solution of}\quad
+    \begin{bmatrix}1 & x\end{bmatrix}\begin{bmatrix}
+        a\\b
+    \end{bmatrix}
+    =\begin{bmatrix}
+        y
+    \end{bmatrix}
+\]
+
+\section{The singular value decomposition}
+\begin{theorem}[Singular Value Decomposotion, subspace formulation]\label{T:SVD}
+    Let $A:\RR^n\to \RR^m$ have rank $r$.
+    Then there are orthonormal bases 
+    \[
+        u_1,\ldots,u_r\quad\text{of}\quad C(A^T)\subseteq \RR^n
+    \]
+    and
+    \[
+        v_1,\ldots,v_r\quad\text{of}\quad C(A)\subseteq \RR^m
+    \]
+    and numbers
+    \[
+        \sigma_1\geq\sigma_2\geq\cdots\geq \sigma_r>0
+    \]
+    such that
+    \[
+        Au_i = \sigma_i v_i\quad\text{for}\quad i=1,\ldots,r.
+    \]
+    The $\sigma_i$ are uniquely determined by $A$.
+\end{theorem}
+
+\begin{corollary}[Singular value decomposotion, basis formulation]
+    Let $A\in\RR^{m\times n}$ have rank $r$. Then there are orthogonal matrices
+    \[U\in\RR^{n\times n}\quad\text{and}\quad V\in\RR^{m\times m}\]
+    and numbers
+    \[
+        \sigma_1\geq\sigma_2\geq\cdots\geq \sigma_r>0
+    \]
+    such that
+    \[
+        A = V\,\Sigma\, U^T
+    \]
+    where $\Sigma\in\RR^{m\times n}$ is defined by
+    \begin{equation}\label{E:Sigma}
+        \Sigma_{ij} = \begin{cases}
+            \sigma_i&\text{if $i=j<r$,}\\
+            0&\text{otherwise.}
+        \end{cases}
+    \end{equation}
+    The $\sigma_i$ are uniquely determined by $A$.
+\end{corollary}
+\begin{proof}
+    By Theorem~\ref{T:SVD}, there are orthonormal bases
+    \[
+        u_1,\ldots,u_r\quad\text{of}\quad C(A^T)\subseteq \RR^n
+    \]
+    and
+    \[
+        v_1,\ldots,v_r\quad\text{of}\quad C(A)\subseteq \RR^m
+    \]
+    and numbers
+    \[
+        \sigma_1\geq\sigma_2\geq\cdots\geq \sigma_r>0
+    \]
+    such that
+    \begin{equation}\label{E:plskdjf}
+        Au_i = \sigma_i v_i\quad\text{for}\quad i=1,\ldots,r.
+    \end{equation}
+    Let
+    \[
+    u_{r+1},\ldots,u_{n}\quad
+    \text{be an orthonormal basis of}\quad
+    C(A^T)^\perp=N(A)
+    \]
+    and let
+    \[
+        v_{r+1},\ldots,u_{m}\quad
+        \text{be an orthonormal basis of}\quad
+        C(A)^\perp=N(A^T).
+        \]
+    Then $u_1,\ldots,u_r,u_{r+1},\ldots, u_n$ and
+    $v_1,\ldots,v_r,v_{r+1},\ldots,v_m$ are orthonormal bases
+    of $\RR^n$ and $\RR^m$, respectively.
+    Equivalently,
+    \[
+        U:=\begin{bmatrix}
+            u_1&\cdots& u_n
+        \end{bmatrix}\in\RR^{n\times n}
+        \quad\text{and}\quad
+        V:=\begin{bmatrix}
+            v_1&\cdots& v_m
+        \end{bmatrix}\in\RR^{m\times m},
+    \]
+    are orthogonal matrices.
+    Define $\Sigma\in\RR^{m\times n}$ by~\eqref{E:Sigma}.
+    Since $U$ is orthogonal,
+    \[
+        U^Tu_i = U^{-1}u_i = e_i.
+    \]
+    Therefore,
+    \[
+    V\Sigma U^Tu_i = V\Sigma e_i = 
+        V(\sigma_ie_i) = \sigma_i Ve_i = \sigma_i v_i \overset{\eqref{E:plskdjf}}= Au_i,        
+    \]
+    for $i=1,\ldots,r$ and
+    \[
+    V\Sigma U^Tu_i = V\Sigma e_i = 
+        V0 = 0 = Au_i,        
+    \]
+    for $i=r+1,\ldots,n$. (We have $Au_i=0$ for $i=r+1,\ldots,n$
+    because $u_i\in C(A^T)^\perp = N(A)$.)
+    Since $u_1,\ldots,u_n$ is a basis of $\RR^n$ and $Au_i=V\Sigma U^T u_i$
+    for all $i$, we must have $A = V\Sigma U^T$.
+\end{proof}
+
+\section{Regularization}
+
+Let $x_1>0$.
+Suppose we want to fit a line of the form $y=\hat b x$ to the one point data set,
+$\{(x_1, Y_1)\}$, where
+\[
+    Y_1\sim N(bx_1,\sigma^2).
+\]
+The parameters $b$ and $\sigma^2$ are unknown.
+In this case, a natural estimator of $b$ is
+\[
+    \hat b = \hat b(Y_1) = \frac1{x_1}Y_1.
+\]
+
+Let $x_0>0$ and let $Y_0\sim N(bx_0, \sigma^2)$ be independent of $Y_1$.
+We want to compute the expected prediction error
+\[
+    \EPE := \EE\left[(\hat b(Y_1) x_0 - Y_0)^2\right]
+\]
+
+\[
+    \EE\left[(\hat b(Y_1) x_0 - Y_0)^2\right] = 
+    x_0^2\EE\left[\hat b(Y_1)^2\right] - 2x_0\EE\left[\hat b(Y_1)Y_0\right] + \EE\left[Y_0^2\right]
+\]
+
+\begin{align*}
+    \EE\left[\hat b(Y_1)^2\right]
+    &= \frac1{x_1^2}\EE\left[Y_1^2\right]\\
+    &= \frac1{x_1^2}\left(\EE\left[Y_1\right]^2 + \Var Y_1  \right)\\
+    &= \frac1{x_1^2}\left(b^2x_1^2 + \sigma^2\right)\\
+    &= b^2 + \frac{\sigma^2}{x_1^2}
+\end{align*}
+
+Since $Y_0$ and $Y_1$ are independent,
+\[
+    \EE\left[\hat b(Y_1)Y_0\right]
+    = \EE\left[\hat b(Y_1)\right]\EE\left[Y_0\right] = b(bx_0) = b^2x_0
+\]
+
+\[
+    \EE\left[Y_0^2\right] = b^2x_0^2 + \sigma^2
+\]
+
+Therefore,
+\begin{align*}
+    \EPE &= x_0^2\left(b^2 + \frac{\sigma^2}{x_1^2}\right)
+    - 2 b^2x_0^2 + (b^2x_0^2 + \sigma^2)\\
+    & = \sigma^2 + \frac{x_0^2\sigma^2}{x_1^2}
+\end{align*}
+
+\begin{align*}
+    \Bias\left(\hat b(Y_1)x_0, bx_0\right)
+    & = \EE\left[\hat b(Y_1)x_0\right] - bx_0\\
+    & = bx_0 - bx_0\\
+    & = 0
+    \intertext{and}
+    \Var \left(\hat b(Y_1)x_0\right)
+    &= x_0^2\Var \left(\frac1{x_1}Y_1\right)\\
+    &= \frac{x_0^2\sigma^2}{x_1^2}
+\end{align*}
+
+Thus, we recover the bias-variance decomposition:
+\[
+    \EPE = \sigma^2 
+    + \Var \left(\hat b(Y_1)x_0\right)
+    + \Bias\left(\hat b(Y_1)x_0, bx_0\right)^2 
+\]
+(Is $\hat b$ an UMVU?)
+
+Can we find an estimator, $\tilde b(Y_1)$, of $b$, possibly biased, such that
+\[
+    \EE\left[(\tilde b(Y_1) x_0 - Y_0)^2\right] <
+    \EE\left[(\hat b(Y_1) x_0 - Y_0)^2\right]\text{?}
+\]
+
+For $\lambda \geq 0$, define
+\[
+    \hat b_\lambda := \frac1{x_1 + \lambda} Y_1
+\]
+
+\[
+    \E{(\hat b_\lambda(Y_1) x_0 - Y_0)^2}
+    =x_0^2\E{\hat b_\lambda(Y_1)^2}
+    - 2x_0\E{\hat b_\lambda(Y_1)Y_0}
+    + \E{Y_0^2}
+\]
+
+\begin{align*}
+    \E{\hat b_\lambda(Y_1)^2}
+    &= \frac1{(x_1 + \lambda)^2}\E{Y_1^2}\\
+    &= \frac1{(x_1 + \lambda)^2}\left(\E{Y_1}^2 + \Var Y_1  \right)\\
+    &= \frac1{(x_1 + \lambda)^2}\left(b^2x_1^2 + \sigma^2\right)
+\end{align*}
+
+Since $Y_0$ and $Y_1$ are independent,
+\begin{align*}
+    \E{\hat b_\lambda(Y_1)Y_0}
+    & = \E{\hat b_\lambda(Y_1)}\E{Y_0}\\[1ex]
+    & = \frac{bx_1}{x_1+\lambda}bx_0\\[1ex]
+    & = \frac{b^2x_0x_1}{x_1 + \lambda}
+\end{align*}
+
+\[
+    \EE\left[Y_0^2\right] = b^2x_0^2 + \sigma^2
+\]
+
+Therefore,
+\begin{align*}
+    \E{(\hat b_\lambda(Y_1) x_0 - Y_0)^2} &= 
+    \frac{b^2x_0^2x_1^2 + x_0^2\sigma^2}{(x_1 + \lambda)^2}
+    - \frac{2b^2x_0^2x_1}{x_1 + \lambda} + b^2x_0^2 + \sigma^2\\
+    &= \sigma^2 + \frac{x_0^2}{(x_1 + \lambda)^2}
+    \big(b^2x_1^2 + \sigma^2 \\
+    &\qquad- 2b^2x_1^2 - 2b^2x_1\lambda 
+    + b^2x_1^2 + 2b^2x_1\lambda + b^2\lambda^2\big)\\
+    &= \sigma^2 + \frac{x_0^2}{(x_1 + \lambda)^2}
+    \left(\sigma^2 + b^2\lambda^2\right)\\
+    &= \sigma^2 + \frac{x_0^2\sigma^2}{(x_1 + \lambda)^2}
+    + \frac{b^2\lambda^2x_0^2}{(x_1 + \lambda)^2}
+\end{align*}
+
+Double check:
+\begin{align*}
+    \Bias\left(\hat b_\lambda(Y_1)x_0, bx_0\right)
+    & = \EE\left[\hat b_\lambda(Y_1)x_0\right] - bx_0\\
+    & = \frac{bx_0x_1}{x_1+\lambda} - bx_0\\
+    & = -\frac{b\lambda x_0}{x_1+\lambda}
+    \intertext{and}
+    \Var \left(\hat b_\lambda(Y_1)x_0\right)
+    &= x_0^2\Var \left(\frac1{x_1+\lambda}Y_1\right)\\
+    &= \frac{x_0^2\sigma^2}{(x_1 + \lambda)^2}
+\end{align*}
+
+So:
+\[
+    \E{(\hat b_\lambda x_0 - Y_0)^2}
+    = \sigma^2 + \Var \left(\hat b_\lambda x_0\right) +
+    \Bias\left(\hat b_\lambda x_0, bx_0\right)^2
+\]
+
+\[
+    \E{(\hat b_\lambda x_0 - Y_0)^2} =
+    \sigma^2 + x_0^2\sigma^2\frac{1 + (\frac{b}{\sigma})^2\lambda^2}{(x_1 + \lambda)^2},\qquad
+    \E{(\hat b x_0 - Y_0)^2} = \sigma^2 + x_0^2\frac{\sigma^2}{x_1^2}
+\]
+Let $c = b/\sigma$. Then
+\begin{align*}
+    \frac1{\sigma^2x_0^2}\left(\E{(\hat b_\lambda x_0 - Y_0)^2} 
+    - \E{(\hat b x_0 - Y_0)^2}\right)
+    &= \frac{1+c^2\lambda^2}{(x_1+\lambda)^2} - \frac1{x_1^2}\\
+    &=\frac{(1+c^2\lambda^2)x_1^2 - (x_1+\lambda)^2}{x_1^2(x_1+\lambda)^2}\\
+    &=\lambda(c^2\lambda x_1^2 - 2 x_1 - \lambda)\\
+    &= (c^2x_1^2 - 1)\lambda\left(\lambda - \frac{2x_1}{(c^2x_1^2 - 1)}\right)
+\end{align*}
+
+Let \[F(\lambda) = \E{(\hat b_\lambda x_0 - Y_0)^2}.\]
+\begin{align*}
+    F'(\lambda) &= x_0\frac d{d\lambda}\frac {\sigma^2 + b^2\lambda^2}{(x_1+\lambda)^2}\\
+    &=x_0\frac{2b^2\lambda(x_1+\lambda)^2 
+    - (\sigma^2 + b^2\lambda^2)2(x_1 + \lambda)}
+    {(x_1+\lambda)^4}\\
+    &=2x_0\frac{b^2\lambda(x_1+\lambda) 
+    - (\sigma^2 + b^2\lambda^2)}
+    {(x_1+\lambda)^3}\\
+    &= 2x_0\frac{b^2x_1\lambda - \sigma^2}
+    {(x_1+\lambda)^3}\\
+\end{align*}
+
+Since $x_0, x_1, b, \sigma^2>0$,
+\[
+    \lambda^* := \argmin_{\lambda \geq 0} \E{(\hat b_\lambda x_0 - Y_0)^2} = \frac{\sigma^2}{b^2x_1} > 0
+\]
+Moreover, since
+\[
+    F(0) = \E{(\hat b x_0 - Y_0)^2},
+\]
+we deduce that
+\[
+    \EPE_\lambda < \EPE.
+\]
 \end{document}
