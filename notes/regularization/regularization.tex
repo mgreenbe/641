@@ -533,4 +533,41 @@ we deduce that
 \[
     \EPE_\lambda < \EPE.
 \]
+
+\section{$k$-fold cross validation}
+
+$D = \{(x_1,Y_1),\ldots,(x_n, Y_n)\}$, $x_i\in\RR^p$, $Y_i\sim N(x_i\beta, \sigma^2)$ independent
+
+Let $I_1,\ldots,I_k$ be a partition of $\{1,\ldots,n\}$
+into $k$ parts of about equal size.
+
+For $i=1,\ldots,n$ let
+\[
+    D_i = \{(x_i, Y_i) : i\in I_i\}
+\]
+and let
+\[
+    D_{-i} = D - D_i
+\]
+$(x_i, Y_i)$, $i\in I_i$, from $D$:
+\[
+    D_i = D \setminus \{(x_i, Y_i) : i \in I_i\}
+\]
+
+For $j=1,\ldots,n$, let $\hat\theta_{-i}$
+be an estimator of $\beta$ computed using the dataset $D_{-i}$.
+Let
+\[
+    \MSE_i = \E{\frac1n\sum_{i\in I_i}(x_i\hat\theta_{-i} - Y_i)^2}
+\]
+be the mean square error computed using the dataset $D_i$ and set
+\[
+    \CV_k = \frac1k\sum_{i=1}^k\MSE_i.
+\]
+We use $\CV_k$ as a proxy for prediction error.
+We tune any tuneable (hyper)parameters to minimize $\CV_k$.
+
+When $k=1$, this is called \emph{leave one out cross validation (LOOCV)}.
+In practice, $k$ is often $5$ or $10$.
+
 \end{document}

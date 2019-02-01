@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1548803193 "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.tex" "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.pdf" "regularization" 1548803194
-  "../../macros.tex" 1548791849 3209 0b8ac8ffc44c1fc731200017a92e01c9 ""
-  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.aux" 1548803194 720 51de631ffe808614b5792c6ab52b51f0 ""
-  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.tex" 1548803192 14783 debe9aba05d175165588fb5164cbbe76 ""
+["pdflatex"] 1548886479 "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.tex" "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.pdf" "regularization" 1548886479
+  "../../macros.tex" 1548886160 3239 0b67c96444eeb81794f81c81f1c58447 ""
+  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.aux" 1548886479 811 6489b282d715b19a66c3c3a411a97573 ""
+  "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.tex" 1548886478 15723 c240d0daf218a39bc341dbe5789dd8ac ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -146,11 +146,11 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1523934492 2717033 f61a5287d9c22a39a74f1979fe3f905c ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1523934516 4220280 10cab8fbd7c5a7c52aba9917e190d018 ""
   "/usr/local/texlive/2018/texmf.cnf" 1523934483 577 0b39adfd7c93507ff20c9c14c2f1a33f ""
-  "regularization.aux" 1548803194 720 51de631ffe808614b5792c6ab52b51f0 ""
-  "regularization.tex" 1548803192 14783 debe9aba05d175165588fb5164cbbe76 ""
+  "regularization.aux" 1548886479 811 6489b282d715b19a66c3c3a411a97573 ""
+  "regularization.tex" 1548886478 15723 c240d0daf218a39bc341dbe5789dd8ac ""
   (generated)
+  "regularization.log"
   "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.log"
   "regularization.pdf"
-  "regularization.log"
   "regularization.aux"
   "/Users/mgreenbe/teaching/2019-winter/641/notes/regularization/regularization.pdf"
