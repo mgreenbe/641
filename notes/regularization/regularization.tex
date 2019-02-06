@@ -353,6 +353,34 @@ Solution:
     for all $i$, we must have $A = V\Sigma U^T$.
 \end{proof}
 
+\[A = U\Sigma V^T\Longleftrightarrow AV = U\sigma
+\Longleftrightarrow Av_j = \sigma_j u_j\]
+
+\begin{definition}
+    The vector $v_j$ is called the \emph{$j$-th principal component} of $A$.
+\end{definition}
+
+Let $X_1,\ldots,X_p$ be $n$-dimensional random variables such that
+\[
+    \E{X_i}=0
+\]
+for all $i$. Let
+\[
+    X = \begin{bmatrix}
+        X_1&\cdots& X_p
+    \end{bmatrix}
+\]
+Then $$K := \E{X^TX}$$ is the covariance matrix of the random \emph{row} vector $X$.
+
+\[
+    \argmax_a\dfrac {\var(Xa)}{\|a\|^2}
+    =\argmax_a\dfrac{a^T K a}{\|a\|^2}
+    =\argmax_{\|a\|=1} a^T K a
+\]
+
+
+
+
 \section{Regularization}
 
 Let $x_1>0$.
@@ -570,4 +598,130 @@ We tune any tuneable (hyper)parameters to minimize $\CV_k$.
 When $k=1$, this is called \emph{leave one out cross validation (LOOCV)}.
 In practice, $k$ is often $5$ or $10$.
 
+\section{More ridge regression}
+
+Let $t>0$. Suppose that $x^*$ is a solution of
+\begin{center}
+    minimize $\|x - b\|^2$ subject to $\|x\|^2=t^2$.
+\end{center}
+and that $x^{**}$ is a solution of
+\begin{center}
+    minimize $\|x - b\|^2$ subject to $\|x\|^2\leq t^2$.
+\end{center}
+For $r>0$, let
+\[
+    S_r = \{x\in\RR^n : \|x\|=r\},\quad 
+    B_r = \{x\in\RR^n : \|x\|< r\}.
+\]
+\begin{theorem}
+    Let $r>0$ and define
+    \[
+        x^* = \argmin_{x\in S_r}f(x),\quad
+        x^{**} = \argmin_{x\in B_r\cup S_r}f(x).
+    \]
+    Let $\lambda^*$ be the Lagrange multiplier such that
+    \[
+        \nabla_{x,\lambda} f(x^*) + \lambda^*\nabla_{x,\lambda} g(x^*)=0,
+    \]
+    where $g(x):= \|x\|^2 - r^2$. Assume $\lambda^*\neq 0$.
+    Then $x^*=x^{**}$ if and only if $\lambda^*>0$.
+
+\end{theorem}
+Let
+\[
+    f(x) = \|Ax-b\|^2,\quad
+    g(x)=\|x\|^2,\quad\text{and}\quad
+    L(x,\lambda)=f(x) + \lambda g(x).
+\]
+Then there is a Lagrange multiplier $\lambda^*$ such that
+\[
+    \nabla_{x, \lambda} L(x^*,\lambda^*) = 0.
+\]
+
+Thus,
+\begin{equation}\label{E:lagrange}
+    \nabla_x f(x^*) = -\lambda\nabla_xg(x^*).
+\end{equation}
+Now $\nabla_x f(x^*)$ points in the direction of steepest ascent of
+$f(x)$ at $x=x^*$ while $\nabla_x g(x^*)$ is an outward-pointing
+normal vector to the solution set of $g(x)=0$, i.e., to the sphere
+of radius $t$ centered at $0$.
+
+Suppose $\lambda^*> 0$. Since $\nabla_x g(x^*)\neq 0$ (why?),
+$\nabla_xf(x^*)\neq 0$. Moreover, $\nabla_x f(x^*)$ and $\nabla_x g(x^*)$
+point in the opposite directions. Since the latter is an outward-pointing
+normal to the $g(x)=0$, the former points inward.
+Thus, $f(x)$ increases as $x$ moves into $B(0, t)$ from $x^*$.
+It follows that $x^*$
+
+
+
+\textbf{Claim:}
+Suppose $x^*\neq x^{**}$.
+Then $\lambda^* < 0$.
+
+(Equivalently, if $\lambda^*\geq 0$, then $x^* = x^{**}$.)
+
+
+
+By the strict convexity of $f(x)$,
+\begin{align*}
+    f(x^* + \delta v) &= f(x^* + \delta (x^{**} - x^*))\\
+    & = f((1-\delta)x^* + \delta x^{**})\\
+    & < (1-\delta) f(x^*) + \delta f(x^{**})\\
+    & \leq (1-\delta) f(x^*) + \delta f(x^*)\\
+    & = f(x^*)
+\end{align*}
+As $\nabla f\cdot v$ coincides with the directional derivative in the $v$-direction,
+\[
+    \nabla f(x^*)\cdot v = \lim_{\delta\downarrow 0}\frac{f(x^* + \delta v) - f(x^*)}\delta < 0.
+\]
+It follows that $\nabla f(x^*)$ points outward from $S_r$.
+But so does $\nabla g(x^*)$.
+Therefore, by ~\eqref{E:lagrange}, we must have $\lambda^* < 0$.
+
+Therefore, 
+Let $v$ be the vector pointing from $x^*$ to $x^{**}$
+Since $f(x^{**})\leq f(x^*)$. Since $f(x)$ is convex,
+\[
+    0 \geq f((t-1)x^*) - f(tx^{**}) \geq f((t-1))
+\]
+
+
+\begin{theorem}
+    Suppose
+    \begin{equation}\label{E:unconstrained}
+        x^* = \argmin_x\left( \|Ax-b\| + \lambda \|x\|^2\right),
+    \end{equation}
+    where $\lambda>0$.
+    Then
+    \[
+        x^*=\argmin_{\|x\|\leq \|x^*\|}\|Ax-b\|.
+    \]
+    Conversely, suppose
+    \[
+        \argmin_{\|x\|\leq r}\|Ax-b\| 
+        = \argmin_{\|x\|=r}\|Ax-b\|=: x^*;
+    \]
+    Then there is a $\lambda^*>0$ such that
+    \[
+        x^* = \argmin_x\left(\|Ax-b\| + \lambda^* \|x\|^2\right).
+    \]
+\end{theorem}
+
+\begin{proof}
+    Suppose~\eqref{E:unconstrained} holds for some $\lambda >0$.
+    Set
+    \[
+        f(x) = \|Ax-b\|,\quad
+        g(x)=\|x\|^2 - \|x^*\|^2,
+        \quad\text{and}\quad
+        h(x) = f(x) + \lambda g(x).
+    \]
+    Then
+    \[
+    \nabla_x h(x) = \nabla_x \left( \|Ax-b\| + \lambda \|x\|^2\right) = 0
+    \]
+
+\end{proof}
 \end{document}
