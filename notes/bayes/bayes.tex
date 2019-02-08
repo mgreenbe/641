@@ -1,0 +1,53 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{mathrsfs, fullpage, amsmath, amssymb, graphicx, xcolor, tikz}
+
+\newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+
+\input{../../macros.tex}
+
+\begin{document}
+\title{Na\"ive Bayes}
+\maketitle
+
+$p$ features, categorical response $y\in C=\{C_1,\ldots,C_K\}$
+\[
+    (x_1, y_1),\ldots,(x_n, y_n),\quad x_i = (x_{i1},\ldots,x_{ip})
+\]
+
+Bayes rule:
+\[
+    p(y|x) = \frac{p(x|y)p(y)}{p(x)} \propto p(x|y)p(y)
+\]
+
+
+\[
+    \hat{p}(y) := \frac{\#[y_i=y]}n
+\]
+\[
+    \hat{p}(x|y) := \frac{\#[(x_i,y_i)=(x, y)]}{\#[(x_i,y_i)=(*,y)]}
+\]
+
+\[
+    \hat{p}(y|x) := \frac{\hat{p}(x|y)\hat{p}(y)}{\hat{p}(x)} \propto \hat{p}(x|y)\hat{p}(y)
+\]
+Decision rule: Assign $x_0$ to class $i$ if
+\[
+    \hat{p}(y|x_0) > \hat{p}(y'|x_0)\quad\text{for all}\quad y'\neq y.
+\]
+
+
+Let $\xi\in \RR^p$, $c\in C$
+\[
+    \hat{p}(\xi|c) = \frac{\#[(x_i,y_i)=(\xi, c)]}{\#[(x_i,y_i)=(*,c)]}
+    = \frac{\#[(x_{i1},\ldots,x_{ip},y_i)
+    =(\xi_1,\ldots,\xi_p, c)]}{\#[(x_i,y_i)=(*,c)]}
+\]
+Suppose $X_1,\ldots,X_p$ are conditionally independent given $Y$. Then
+\[
+    \hat{p}(\xi|c) = p(\xi_1|c)\cdots p(\xi_p|c)
+\]
+\[
+    \hat{p}(\xi_j|c) := \frac{\#[(x_{ij},y_i)=(\xi, c)]}{\#[(x_{ij},y_i)=(*,c)]}
+\]
+\end{document}
