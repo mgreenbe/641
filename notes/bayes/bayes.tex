@@ -50,4 +50,78 @@ Suppose $X_1,\ldots,X_p$ are conditionally independent given $Y$. Then
 \[
     \hat{p}(\xi_j|c) := \frac{\#[(x_{ij},y_i)=(\xi, c)]}{\#[(x_{ij},y_i)=(*,c)]}
 \]
+
+\section{Take two}
+Let $\vX=(X_1,\ldots,X_p)$ be a random vector and let 
+$Y$ be a categorical random variable taking values in $\{1,\ldots,K\}$.
+Given a realization $\vx$ of $X$, define 
+\[
+    f(\vx) = \argmax_y p(y|\vx).
+\]
+By Bayes' rule,
+\[f(\vx) = \argmax_y p(\vx|y)p(y).
+\]
+
+Assume that $Y$ has a categorical distribution with mass function
+\[
+    p(y)=\pi_1^{[y=1]}\cdots\pi_K^{[y=K]},
+\]
+where $\pi_1+\cdots\pi_K=1$
+and the symbolk $[y=k]$ stands for $1$ is $y=k$ and for $0$ if $y\neq k$.
+Equivalently,
+\[
+    p(Y=k) = \pi_k,\qquad 1\leq k\leq K.
+\]
+
+We estimate $p(\vx|y)$ and $p(y)$ using training data,
+ $(\vx^{(1)}, y^{(1)}),\ldots, (\vx^{(n)}, y^{(n)})$.
+
+\[
+    p_{jy} = p(X_j=1|Y=y)
+\]
+
+Then $ \hat p_{yj}$, where
+\[
+    p_{jy}\approx \hat p_{jy}
+    := \frac{\#\{i : \text{$x^{(i)}_j = 1$ and $y^{(i)}=y$}\}}
+    {\#\{i : y^{(i)}=y\}}.
+\]
+
+Note that
+\begin{align*}
+    p(X_j=0|Y=y) &=1 - p_{yj}\\
+    &\approx 1-\hat p_{yj}
+\end{align*}
+
+Therefore,
+\begin{align*}
+    \hat p(x_j|y) &:= \hat p_{jy}^{\;x_{yj}}(1-\hat p_{jy})^{1-x_j}\\
+    &\approx p_{jy}^{x_{yj}}(1-p_{jy})^{1-x_j}\\
+    &= p(X=x_j|Y=y)
+\end{align*}
+Taking logs,
+\[
+    \log \hat p(x_j|y) = x_j\log \hat p_{jy} + (1-x_j)\log(1-\hat p_{jy})
+\]
+
+\[
+    \sum_{j=1}^p\log p(x_j|y) = 
+\]
+
+\[
+    I(\vy = y)\cdot \vx_j = \#\{i : \text{$x^{(i)}_j = 1$ and $y^{(i)}=y$}\}
+\]
+\[
+    I(\vy = y)\cdot I(\vy = y) = \#\{i : y^{(i)}=y\}
+\]
+
+\[
+    \hat p_{jy} = \frac{I(\vy = y)\cdot \vx_j}{I(\vy = y)\cdot I(\vy = y)}
+\]
+
+\[
+    \hat p_y = \frac{I(\vy = y)\cdot \vx}{I(\vy = y)\cdot I(\vy = y)}
+\]
+
+
 \end{document}
