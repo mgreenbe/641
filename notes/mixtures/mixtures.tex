@@ -1,0 +1,161 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{mathrsfs, fullpage, amsmath, amssymb, graphicx, xcolor, tikz}
+
+\newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+\DeclareMathOperator{\Bernoulli}{Bernoulli}
+\DeclareMathOperator{\Cat}{Categorical}
+
+\input{../../macros.tex}
+
+\begin{document}
+\title{Gaussian mixtures}
+\maketitle
+
+$(z, x)$ jointly distributed, $x$ categorical and latent (unobservable)
+\[
+    p(x) = \sum_{k=1}^Kp(z, x) = \sum_{k=1}^K p(z=k)p(x|z=k)
+\]
+
+\textbf{Example:}
+\begin{align*}
+    z&\sim \Cat(\pi_1,\ldots,\pi_K)\quad\text{where}\quad \sum \pi_k=1,\\
+    x|z=k &\sim N(\mu_k, \sigma_k^2)\\
+\end{align*} 
+\begin{equation}\label{E:mixture_of_two_gaussians}
+    p(x) = \sum_{k=1}^K \pi_k G(x|\mu_k, \sigma_k^2)
+\end{equation}
+\textit{To do:} Find maximum likelihood estimates of $\pi_k, \mu_k, \sigma_k^2$.
+
+Suppose $\theta$ is a parameter of $p(x)$.
+\begin{align*}
+    \frac{\partial}{\partial \theta} \log p(x)
+    &= \frac{\partial}{\partial \theta} \log\left(\sum_{k=1}^N p(k,  x)\right)\\
+    &= \frac{\sum_{k=1}^N \frac{\partial}{\partial \theta} p(k, x)}
+    {\sum_{j=1}^K p(j, x)}\\
+    &= \frac{\sum_{k=1}^K p(k , x)\frac{\partial}{\partial \theta}\log p(k, x)}
+    {\sum_{j=1}^K p(j, x)}\\
+    &= \sum_{k=1}^K \left(\frac{p(k, x)}{\sum_{j=1}^K p(j, x)}\right)
+    \frac{\partial}{\partial \theta}\log p(k, x)\\
+    &= \sum_{k=1}^K p(k|x)
+    \frac{\partial}{\partial \theta}\big(\log p(k) + \log p(x | k)\big)
+\end{align*}
+
+With $p(x)$ as in~\eqref{E:mixture_of_two_gaussians} and $k\in\{1, \ldots, K\}$,
+\begin{align*}
+    \frac{\partial}{\partial \mu_k} \log p(x) &= p(k|x)\frac{x-\mu_k}{\sigma_k^2}\\
+    \frac{\partial}{\partial \sigma_k^2} \log p(x)
+    &= p(k|x)\frac1{2\sigma_k^2}\left(\frac{(x-\mu_k)^2}{\sigma_k^2} - 1\right)
+\end{align*}
+
+Let $(z^{(1)}, x^{(1)}), \ldots, (z^{(n)}, x^{(n)})$ be a random sample.
+Set
+\[
+    r_k^{(i)} = p(k|x^{(i)}).
+\]
+
+\begin{align*}
+    \frac{\partial}{\partial \theta} \log \prod_{i=1}^n p(x^{(i)}) 
+    &= \sum_{i=1}^n \frac{\partial}{\partial \theta} \log p(x^{(i)})\\
+    &= \sum_{i=1}^n\sum_{k=1}^K r_k^{(i)}
+    \frac{\partial}{\partial \theta}\big(\log p(k) + \log p(x^{(i)} | k)\big)
+\end{align*}
+
+With $p(x)$ as in~\eqref{E:mixture_of_two_gaussians} and $k\in\{1, \ldots, K\}$,
+\begin{align*}
+    \frac{\partial}{\partial \mu_k}\log \prod_{i=1}^n p(x^{(i)})
+    &= \sum_{i=1}^n r^{(i)}_k\frac{x^{(i)}-\mu_k}{\sigma_k^2}\\
+    &= \frac1{\sigma_k^2}\left(\sum_{i=1}^n r^{(i)}_kx^{(i)} - \mu_k\sum_{i=1}^n r^{(i)}_k\right)\\
+    \frac{\partial}{\partial \sigma_k^2} \prod_{i=1}^n\log p(x^{(i)})
+    &= \frac1{2(\sigma_k^2)^2}\left(\sum_{i=1}^n r^{(i)}_k(x^{(i)} - \mu_k)^2 - \sigma_k^2\sum_{i=1}^nr^{(i)}_k\right)
+\end{align*}
+Setting these expressions equal to zero and solving, we get
+\[
+    \hat \mu_k = \frac{\sum_{i=1}^n r^{(i)}_k x^{(i)}}{\sum_{i=1}^n r^{(i)}_k},\quad
+    \hat \sigma_k^2 = \frac{\sum_{i=1}^n r^{(i)}_k(x^{(i)}-\hat\mu_k)^2}{\sum_{i=1}^n r^{(i)}_k}.
+\]
+Let
+\[
+    I_k = \{i : z^{(i)}=k\},\quad
+    n_k := \big|\{i : z^{(i)} = k\}\big|. 
+\]
+Then
+\begin{align*}
+    \pi_k \approx \frac{n_k}{n}\approx \frac1n \sum_{i=1}^n p(k|x^{(i)}) = \frac1n\sum_{i=1}^n r^{(i)}_k
+\end{align*}
+Set
+\[
+    \hat\pi_k = \frac1n\sum_{i=1}^n \hat r_k^{(i)}
+\]
+As
+\[
+    r_k^{(i)} = p(k|x^{(i)})
+    = \frac{p(k)p(x^{(i)}|k)}{\sum_{j=1}^Kp(j)p(x^{(i)}|j)}
+    = \frac{\pi_k p(x^{(i)}|k)}{\sum_{j=1}^K\pi_j p(x^{(i)}|j)},
+\]
+we set
+\[
+    \hat r_k^{(i)} = \frac{\hat \pi_k \hat p(x^{(i)}|k)}{\sum_{j=1}^K \hat \pi_j \hat p(x^{(i)}|j)}
+\]
+
+\section{The EM algorithm}
+
+Choose initial approximations $\pi_{k, 0}$, $\mu_{k, 0}$, $\sigma_{k, 0}$. Set $\theta_{k, 0} = (\mu_{k, 0}, \sigma_{k, 0})$.
+
+Set
+\[
+    r_{k,0}^{(i)} = \frac{\pi_{k,0} G(x^{(i)} \mid \theta_{k, 0})}{\sum_{j=1}^K \pi_{j,0} G(x^{(i)}\mid\theta_{k, 0})}
+\]
+
+For $t\geq 1$:
+
+Update parameters:
+\begin{align*}
+    \pi_{k, t} &= \frac1n\sum_{i=1}^n \hat r_{k,t-1}^{(i)},\\
+    \mu_{k, t} &= \frac{\sum_{i=1}^n r^{(i)}_{k, t-1} x^{(i)}}{\sum_{i=1}^n r^{(i)}_{k,t-1}},\\
+    \sigma_{k, t}^2 &= \frac{\sum_{i=1}^n r^{(i)}_{k, t-1}(x^{(i)}-\mu_{k,t})^2}{\sum_{i=1}^n r^{(i)}_{k, t-1}}.
+\end{align*}
+Then update responsibilities:
+\[
+    r_{k,t}^{(i)} = \frac{\pi_{k,t} G(x^{(i)} \mid \theta_{k, t})}{\sum_{j=1}^K \pi_{j,t} G(x^{(i)}\mid\theta_{k, t})}
+\]
+
+
+\section{$K$-means clustering}
+
+$x^{(1)},\ldots,x^{(n)}\in\RR^p$
+
+If $\mu_1,\ldots,\mu_K\in\RR^p$ and, for $1\leq k\leq K$, let
+\[
+r_k^{(i)} = r_k^{(i)}(\mu_1,\ldots,\mu_K) = \begin{cases}
+    1&\text{if $k = \Argmin_\ell \|x^{(i)} - \mu_\ell\|$},\\
+    0&\text{otherwise.}
+\end{cases}
+\]
+When $r_k^{(i)}=1$, we say that \emph{$\mu_k$ takes responsibility for $x^{(i)}$}.
+
+The \emph{cluster of $\mu_k$}, written $C_k$ or $C(\mu_k)$,
+is the set of all $x^{(i)}$ for which $\mu_k$ takes responsibility:
+\[
+    C(\mu_k) = \{x^{(i)} : r_k^{(i)}=1\}.
+\]
+
+The \emph{covariance of clusters $C_k$ and $C_\ell$} is
+\[
+    \Cov(C_k, C_\ell) = \sum_{x^{(i)}\in C_k}\sum_{x^{(j)}\in C_\ell}\|x^{(i)} - x^{(j)}\|^2
+    = \sum_{i=1}^K\sum_{j=1}^Kr_k^{(i)}r_\ell^{(j)}\|x^{(i)} - x^{(j)}\|^2
+\]
+If $k=\ell$, we call this the \emph{variance of $C_k$}:
+\[
+    \Var C_k = \sum_{x^{(i)}\in C_k}\sum_{x^{(j)}\in C_k}\|x^{(i)} - x^{(j)}\|^2
+    = \sum_{i=1}^K\sum_{j=1}^Kr_k^{(i)}r_k^{(j)}\|x^{(i)} - x^{(j)}\|^2
+\]
+
+\textbf{The clustering problem:} Given $x^{(1)},\ldots,x^{(n)}\in\RR^p$ and $K>0$,
+find $\mu_1,\ldots,\mu_K\in\RR^p$ minimizing
+\[
+    \sum_{k=1}^K \Var C(\mu_k)
+\]
+
+
+\end{document}
