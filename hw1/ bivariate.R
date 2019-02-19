@@ -10,3 +10,4 @@ f <- lm(formula = data[,2] ~ data[,1])
 
 print(qq("predicted: (a, b) = (@{mu2 - rho*s2*mu1/s1}, @{rho*s2/s1})"))
 print(qq("computed: (a, b) = (@{f$coefficients[1]}, @{f$coefficients[2]})"))
+

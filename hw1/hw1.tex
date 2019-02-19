@@ -2,6 +2,10 @@
 
 \input{../macros.tex}
 
+\newcommand{\sol}{\bigskip\noindent\textbf{Solution: }}
+\DeclareMathOperator{\sgn}{sgn}
+
+
 \begin{document}
     \title{STAT 543/641 -- Winter 2019 -- Homework \#1}
 
@@ -10,8 +14,8 @@
 
     \begin{enumerate}
         \setlength\itemsep{1em}
-        \item Let $P$ be a disribution on $\RR$ with variance $\sigma^2$
-        Let $X_1,\ldots,X_n$ be a random sample from $P$ and let $S^2$ be
+        \item 
+        Let $X_1,\ldots,X_n$ be a random sample from $N(\mu, \sigma)$ and let $S^2$ be
         the associated unbiased estimator of $\sigma^2$:
         \[
             S^2 = \frac1{n-1}\sum_{i=1}^n (X_i-\bar X)^2.
@@ -22,17 +26,96 @@
         \[\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}.\]
         (Can you do it without ``cheating''?)
 
+
+        \sol
+        The distribution $\chi^2_{n-1}$ has variance $2(n-1)$. Therefore,
+        \[
+            2(n-1) = \Var\left[\frac{(n-1)S^2}{\sigma^2}\right] = \frac{(n-1)^2}{\sigma^4}\Var S^2.
+        \]
+        Solving for $\Var S^2$, we get
+        \[\Var S^2 = \dfrac{2\sigma^4}{n-1}.\]
+
+
+
         \item 
         \begin{enumerate}
             \setlength{\itemsep}{0.5em}
             \item Let $\tilde{x}$ be the median of $x_1,\ldots,x_n$, $n$ odd. Prove that the identity
             \[\sum_{i=1}^n|x_i-z| = \min_{y\in\RR} \sum_{i=1}^n|x_i-y|\]
             holds if and only if $z=\tilde x$.
+            
+            \sol
+            Let
+            \[
+                f(z) = \sum_{i=1}^n|x_i-z| = \sum_{i=1}^n\sgn(x_i-z)(x_i-z).
+            \]
+            Suppose $z\notin\{x_1,\ldots,x_n\}$. Then, for each $i$, $\sgn(x_i-z)$ is 
+            constant in a neighborhood $U_z$ of $z$. Thus, $f$ is differentiable in $U_z$
+            for and
+            \[
+                f'(w) = \sum_{i=1}^n\sgn(x_i-z)(-1)
+            \]
+            for all $w\in U_z$. This expression for $f'(w)$ is a sum of $n$ terms, each of which is $\pm 1$.
+            Since $n$ is odd, this sum cannot be $0$. Thus, $f'(w)\neq 0$ for all $w\in U_z$.
+            Therefore, $f$ has no local extrema in $U_z$.
+            In particular, $f$ can't achieve its global minimum at $z$.
+            It follows that $f$ must achieve its minimum value on the set $\{x_1,\ldots,x_n\}$.
+
+            Reindexing if necessary, assume
+            \[
+                x_1\leq x_2\leq \cdots \leq x_n.
+            \]
+            I claim that $f$ takes on its minimum value at $z=x_m$.
+            If $n=2m-1$, and $\ell\leq m$, then
+            \begin{align*}
+                \sum_{i=1}^n |x_i - x_\ell| &= \sum_{i=1}^{\ell-1} |x_i - x_\ell| + \sum_{i=1}^{\ell-1} |x_{n-i+1} - x_\ell|
+                + \sum_{i=\ell}^{n-\ell}(x_{n-i+1} - x_\ell)\\
+                &= \sum_{i=1}^{\ell-1} (x_\ell - x_i) + \sum_{i=1}^{m-1} (x_{n-i+1} - x_\ell) + \sum_{i=\ell}^{n-\ell}(x_{n-i+1} - x_\ell)\\
+                &= \sum_{i=1}^{\ell-1} (x_{n-i+1} - x_i) + \sum_{i=\ell}^{n-\ell}(x_{n-i+1} - x_\ell)\\
+            \end{align*}
+            In particular, if $\ell\leq m$, then
+            \begin{align*}
+                \sum_{i=1}^n |x_i - x_m| &= \sum_{i=1}^{m-1} (x_{n-i+1} - x_i)\\
+                &= \sum_{i=1}^{\ell-1} (x_{n-i+1} - x_i) + \sum_{i=\ell}^{m-1} (x_{n-i+1} - x_i)\\
+                &\leq \sum_{i=1}^{\ell-1} (x_{n-i+1} - x_i) + \sum_{i=\ell}^{m-1} (x_{n-i+1} - x_\ell)
+                &(i\geq \ell \Longrightarrow x_i\geq x_\ell)\\
+                &\leq \sum_{i=1}^{\ell-1} (x_{n-i+1} - x_i) + \sum_{i=\ell}^{n-\ell} (x_{n-i+1} - x_\ell)
+                &(n-\ell = (m-1) + (m-\ell)\geq m-1)\\
+                &= \sum_{i=1}^n |x_i - x_\ell|.
+            \end{align*}
+            
+            Now suppose $\ell > m$.
+            We consider the sequence
+            $y_i := -x_{n-i + 1}$.
+            By the above, if $n - \ell + 1\leq m$, then
+            \begin{align*}
+                \sum_{i=1}^n|x_{n-i+1} -x_m|&=\sum|-x_{n-i+1} - (-x_m)|\\
+                &=\sum_{i=1}^n|y_i - y_m|\\
+                &\leq \sum_{i=1}^n|y_i - y_{n - \ell+1}|\\
+                &=\sum_{i=1}^n|-x_{n-i+1} - (-x_{n-(n - \ell+1)+1})|\\
+                &=\sum_{i=1}^n|x_{n-i+1} - x_{\ell}|\\
+                &= \sum_{i=1}^n|x_i - x_{\ell}|,
+            \end{align*}
+            as was to be shown.
+
             \item Let $X_1,\ldots,X_n$ be a random sample from $\cL(\mu, b)$, where $\cL(\mu, b)$
             is the \emph{Laplace distribution} with density
-            \[f(x|\mu, b) = \frac1{2b^2}e^{-|x-\mu|/b}.\]
+            \[f(x|\mu, b) = \frac1{2b}e^{-|x-\mu|/b}.\]
             Assuming that $b$ is known and that $n$ is odd, Show that the MLE of $\mu$
             is the sample median, $\tilde{X}$. (Hint: Use (a).)
+
+            \sol We minimize the negative $\log$-likelihood function,
+            \[
+                h(\mu) = \log 2 + \log b + \frac1{b}\sum_{i=1}^n|x - \mu|.
+            \]
+            For every $b>0$,
+            \[
+                \argmin_\mu h(\mu) = \argmin_\mu \sum_{i=1}^n|x_i - \mu|.
+            \]
+            By (a), 
+            \[
+            \argmin_\mu \sum_{i=1}^n|x_i - \mu| = \tilde x.
+            \]
         \end{enumerate}
 
         \item \cite[Exercise 7.1.3]{HMC} Let $Y_1< Y_2< Y_3$ be the order statistics of
@@ -44,20 +127,153 @@
     where $\theta>0$. Show that $4Y_1$, $2Y_2$, and $\frac43Y_3$ are all unbiased estimators of $\theta$.
     Find the variance of each of these estimators.
 
-    \item Suppose that
+    \sol
+    Let $Z_i=\theta^{-1} Y_i$. Then $Z_1$, $Z_2$, and $Z_3$ are the order statistics of \emph{standard} uniform
+    random variables and, thus, have densities
+    \[3(1-z)^2,\quad 6z(1-z), \quad\text{and}\quad 3z^2,\]
+    respectivelz.
+    Therefore,
+    \begin{align*}
+        \EE{Z_1} &= \int_0^1 3z(1-z)^2\,dz = \frac14,\\
+        \Var Z_1 &= \EE[(Z_1 - \tfrac14)^2] = \int_0^13(z - \tfrac14)^2(1-z)^2\,dz = \frac3{80}\\
+        \EE{Z_2} &= \int_0^1 6z^2(1-z)\,dz = \frac12,\\
+        \Var Z_2 &= \EE[(Z_1 - \tfrac12)^2] = \int_0^13(z - \tfrac14)^2z(1-z)\,dz = \frac9{80}\\
+        \EE{Z_3} &= \int_0^1 6z^2(1-z)\,dz = \frac34,\\
+        \Var Z_3 &= \EE[(Z_1 - \tfrac12)^2] = \int_0^13(z - \tfrac34)^2z^2\,dz = \frac3{32}\\
+    \end{align*}
+
+    If follows that
     \[
-(X,Y)\sim N((\mu_X, \mu_Y), \Sigma),\quad\text{where}\quad
-\Sigma=\begin{pmatrix}\sigma_X^2&\rho\sigma_X\sigma_Y\\\rho\sigma_X\sigma_Y&\sigma_Y^2\end{pmatrix}.
+        \EE[4Y_1] = 4\EE[\theta Z_1] =  4\theta\frac14 = \theta,\quad
+        \Var[4Y_1] = 16\Var(\theta Z_1)= 16\theta^2\frac3{80}=\frac{3\theta^2}5,
     \]
+    \[
+        \EE[2Y_2] = 2\EE[\theta Z_2] =  2\theta\frac12 = \theta,\quad
+        \Var[2Y_2] = 4\Var(\theta Z_2)= 4\theta^2\frac9{80}=\frac{9\theta^2}{20},
+    \]
+    and
+    \[
+        \EE[\tfrac43Y_3] = \frac43\EE[\theta Z_3] =  \frac43\theta\frac34 = \theta,\quad
+        \Var[\tfrac43Y_3] = \frac{16}{9}\Var(\theta Z_3)= \frac{16}{9}\theta^2\frac3{32}=\frac{\theta^2}6.
+    \]
+    In particular, these are all unbiased estimators of $\theta$.
+    \item Suppose that
+        \[
+    (X,Y)\sim N((\mu_X, \mu_Y), \Sigma),\quad\text{where}\quad
+    \Sigma=\begin{pmatrix}\sigma_X^2&\rho\sigma_X\sigma_Y\\\rho\sigma_X\sigma_Y&\sigma_Y^2\end{pmatrix}.
+        \]
     \begin{enumerate}
         \setlength{\itemsep}{0.5em}
         \item Write down the conditional density of $Y$ given $X$.
+        
+        \sol
+        The conditional distribution of $Y$ given $X$ is the quotient of the
+        joint distribution of $X$ and $Y$ by the marginal distribution of $X$:
+        \begin{align*}
+            f_(y|x) = \frac{f(x,y)}{f(x)}
+        \end{align*}
+        Setting
+        \[
+            u = \frac{x - \mu_X}{\sigma_X},\quad v = \frac{y - \mu_Y}{\sigma_Y},
+        \]
+        we have
+        \[
+            f(x,y) = c\exp\left\{-\frac12\frac1{1-\rho^2}\left(u^2 -2\rho u v + v^2\right)\right\}
+        \]
+        Completing the square in $v$, 
+        \[
+            v^2 -2\rho u v + u^2 = (v - \rho u)^2 + u^2(1 - \rho^2)
+        \]
+        Thus,
+        \begin{align*}
+            f(x,y) &= C\exp\left\{-\frac12\frac{(v - \rho u)^2}{1-\rho^2} - \frac12u^2\right\}\\
+            &=  C\exp\left\{-\frac12\frac{(v - \rho u)^2}{1-\rho^2}\right\} \exp\left\{-\frac12u^2\right\},
+            \tag{$*$}
+        \end{align*}
+        where $C = (2\pi\sigma_X\sigma_Y\sqrt{1-\rho^2})^{-1}$.
+        Therefore,
+        \begin{align*}
+            f(x) &= \int_{-\infty}^\infty C\exp\left\{-\frac12\frac{(v - \rho u)^2}{1-\rho^2}\right\}\,dy\\
+            &= C\exp\left\{-\frac12u^2\right\}\int_{-\infty}^\infty
+            \exp\left\{-\frac12\frac{(v - \rho u)^2}{1-\rho^2}\right\}\,dy\\
+        \end{align*}
+        By the translation-invariance of the Gaussian integral,
+        
+        \[
+            \int_{-\infty}^\infty
+            \exp\left\{-\frac12\frac{(v - \rho u)^2}{1-\rho^2}\right\}\,dy
+            =\int_{-\infty}^\infty
+            \exp\left\{-\frac12\frac{v^2}{1-\rho^2}\right\}\,dy = \text{constant.}
+        \]
+        It follows that
+        \[
+            f(x) = \frac1{\sqrt{2\pi}\sigma_X}\exp\left\{-\frac12\left(\frac{x - \mu_X}{\sigma_x^2}\right)^2\right\}
+            \tag{$**$}
+        \]
+
+        Thus, by $(*)$ and $(**)$,
+        \begin{align*}
+            f(y|x) &= \frac{\sqrt{2\pi}\sigma_X}{2\pi\sigma_X\sigma_Y\sqrt{1-\rho^2}}
+            \exp\left\{-\frac12\frac{(v - \rho u)^2}{1-\rho^2}\right\}\\
+            &= \frac1{\sqrt{2\pi}\sigma_Y\sqrt{1-\rho^2}}
+            \exp\left\{-\frac12\frac{\left(y - \Big(\mu_Y
+            + \rho\dfrac{\sigma_Y}{\sigma_X}(x - \mu_X)\Big)\right)^2}{\sigma_Y^2(1-\rho^2)}\right\}\\.
+        \end{align*}
+        This final expression is the density of the univariate normal distribution
+        \[
+            N\left(\mu_Y + \rho\dfrac{\sigma_Y}{\sigma_X}(x - \mu_X), \sigma_Y^2(1-\rho^2)\right).
+        \]
+
+        In other words, the marginal distribution of $X$ is just the density of the
+        univariate Gaussian distribution with mean $\mu_X$ and variance $\sigma_X^2$.
+
+
         \item Show that $\EE[Y|X]$ is has the form $a+bX$.
         Express $a$ and $b$ in terms of $\mu_X$, $\mu_Y$, $\sigma_X$, $\sigma_Y$, and $\rho$.
         (Hint: Use (a).)
+        
+        \sol
+        Since
+        \[
+            Y|X=x \sim N\left(\mu_Y + \rho\dfrac{\sigma_Y}{\sigma_X}(x - \mu_X), \sigma_Y^2(1-\rho^2)\right),
+        \]
+        by (a),
+        \[
+            \EE[Y|X] = \mu_Y + \rho\dfrac{\sigma_Y}{\sigma_X}(X - \mu_X) = \underbrace{\rho\frac{\sigma_Y}{\sigma_X}}_a X + \underbrace{\mu_Y - \rho\frac{\sigma_Y}{\sigma_X}\mu_X}_{b}.
+        \]
+
         \item Confirm your answer to (b) experimentally by finding the least-squares line for data
         sampled from a bivariate normal distribution with randomly generated mean and
         covariance matrix. 
+
+        \sol
+        Something like this:
+
+        \bigskip
+        \begin{verbatim}
+library(MASS)
+library(GetoptLong)
+
+rho <- -0.6
+mu1 <- 1; s1 <- 2
+mu2 <- 1; s2 <- 8
+
+data <- mvrnorm(1e6, mu = c(mu1,mu2), Sigma = matrix(c(s1^2, s1*s2*rho, s1*s2*rho, s2^2), 2) )
+f <- lm(formula = data[,2] ~ data[,1])
+
+print(qq("predicted: (a, b) = (@{mu2 - rho*s2*mu1/s1}, @{rho*s2/s1})"))
+print(qq("computed: (a, b) = (@{f$coefficients[1]}, @{f$coefficients[2]})"))
+        \end{verbatim}
+
+        And here's the output:
+
+        \bigskip
+        \begin{verbatim}
+predicted: (a, b) = (3.4, -2.4)
+computed: (a, b) = (3.41071960965298, -2.40549630753275)
+        \end{verbatim}
+
+
     \end{enumerate}
 
     \item Let $x_0,x_1,\ldots,x_n\in\RR$, let $\epsilon_0,\epsilon_1,\ldots,\epsilon_n$ be independent 
