@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  18 FEB 2019 21:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2018.4.16)  19 FEB 2019 11:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -398,41 +398,52 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [2] [3] [4] [5]
-Overfull \hbox (172.5143pt too wide) in paragraph at lines 266--266
- []\OT1/cmtt/m/n/12 data <- mvrnorm(1e6, mu = c(mu1,mu2), Sigma = matrix(c(s1^2, s1*s2*rho, s1*s2*rho, s2^2), 2) )[] 
+Overfull \hbox (30.48923pt too wide) in paragraph at lines 267--267
+ []               \OT1/cmtt/m/n/12 Sigma = matrix(c(s1^2, s1*s2*rho, s1*s2*rho, s2^2), 2) )[] 
  []
 
 
-Overfull \hbox (30.48923pt too wide) in paragraph at lines 266--266
+Overfull \hbox (30.48923pt too wide) in paragraph at lines 267--267
  []\OT1/cmtt/m/n/12 print(qq("predicted: (a, b) = (@{mu2 - rho*s2*mu1/s1}, @{rho*s2/s1})"))[] 
  []
 
 
-Overfull \hbox (61.36424pt too wide) in paragraph at lines 266--266
+Overfull \hbox (61.36424pt too wide) in paragraph at lines 267--267
  []\OT1/cmtt/m/n/12 print(qq("computed: (a, b) = (@{f$coefficients[1]}, @{f$coefficients[2]})"))[] 
  []
 
-[6] [7]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 359.
+[6] [7] [8]
+Overfull \hbox (4.5593pt too wide) detected at line 410
+[]
+ []
+
+
+Underfull \vbox (badness 5274) has occurred while \output is active []
+
+ [9]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 437.
  (/usr/local/texlive/2018/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 359.
- [8] (/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.aux) ) 
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 437.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [10] [11] [12] (/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.aux) ) 
 Here is how much of TeX's memory you used:
  12852 strings out of 492649
  249215 string characters out of 6129622
- 292141 words of memory out of 5000000
+ 296142 words of memory out of 5000000
  16313 multiletter control sequences out of 15000+600000
  12742 words of font info for 52 fonts, out of 8000000 for 9000
  1302 hyphenation exceptions out of 8191
  57i,15n,54p,451b,346s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on /Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.pdf (8 pages, 191845 bytes).
+Output written on /Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.pdf (12 pages, 201790 bytes).
 PDF statistics:
- 98 PDF objects out of 1000 (max. 8388607)
- 71 compressed objects within 1 object stream
+ 110 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

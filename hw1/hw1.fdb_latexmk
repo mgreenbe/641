@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1550550954 "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.tex" "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.pdf" "hw1" 1550550955
+["pdflatex"] 1550600895 "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.tex" "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.pdf" "hw1" 1550600896
   "../macros.tex" 1549226091 3326 20a0d52d53dc4976bff0b0ebb9d8e8d5 ""
-  "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.aux" 1550550955 419 b6ded49651d91021ff9b6fbdf44598aa ""
-  "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.tex" 1550550954 15362 e26db7048b63b2888bb791c71c120a0f ""
+  "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.aux" 1550600896 421 5b25178e6eb00efe0827e4e11a71d69c ""
+  "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.tex" 1550600895 21541 00f1e7f235d21e4d0a370c3a6903833a ""
   "/usr/local/texlive/2018/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1480098698 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2018/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1480098698 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -147,11 +147,11 @@
   "/usr/local/texlive/2018/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1523934492 2717033 f61a5287d9c22a39a74f1979fe3f905c ""
   "/usr/local/texlive/2018/texmf-var/web2c/pdftex/pdflatex.fmt" 1523934516 4220280 10cab8fbd7c5a7c52aba9917e190d018 ""
   "/usr/local/texlive/2018/texmf.cnf" 1523934483 577 0b39adfd7c93507ff20c9c14c2f1a33f ""
-  "hw1.aux" 1550550955 419 b6ded49651d91021ff9b6fbdf44598aa ""
-  "hw1.tex" 1550550954 15362 e26db7048b63b2888bb791c71c120a0f ""
+  "hw1.aux" 1550600896 421 5b25178e6eb00efe0827e4e11a71d69c ""
+  "hw1.tex" 1550600895 21541 00f1e7f235d21e4d0a370c3a6903833a ""
   (generated)
+  "hw1.log"
   "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.pdf"
   "hw1.aux"
   "hw1.pdf"
   "/Users/mgreenbe/teaching/2019-winter/641/hw1/hw1.log"
-  "hw1.log"
