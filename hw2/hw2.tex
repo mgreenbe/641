@@ -1,41 +1,370 @@
 \documentclass[12pt]{amsart}
 
 \input{../macros.tex}
+\newcommand{\sol}{\bigskip\noindent\textbf{Solution: }}
 
 \newcommand{\vmu}{\boldsymbol{\mu}}
 \newcommand{\vSigma}{\boldsymbol{\Sigma}}
+\DeclareMathOperator{\Cat}{Categorical}
 
 \begin{document}
-    \title{STAT 543/641 -- Winter 2019 -- Homework \#2}
+\title{STAT 543/641 -- Winter 2019 -- Homework \#2}
 
-    \author{Due March ??, 2019}
-    \maketitle
+\author{Due March ??, 2019}
+\maketitle
 
-    \bigskip\hrule\bigskip
-
-    Let $X_1,\ldots,X_m$ and $Y_1,\ldots,Y_n$ be random samples from populations with 
-    means $\mu_X$ and $\mu_Y$ and variances $\sigma_X^2$ and $\sigma_Y^2$, respectively.
-    Let $S_X^2$ and $S_Y^2$ be the standard unbiased estimators of $\sigma_X^2$ and $\sigma_Y^2$,
-    respectively.
-    \begin{enumerate}\setlength\itemsep{0.5em}
-    \item Suppose $\sigma_X^2 = \sigma_Y^2$ and write $\sigma^2$ for this common value.
+Let $\sigma(x)=(1+e^{-x})^{-1}$ be the sigmoid function.
+The negative log-likelihood function associated to fitting a univariate logistic regression model to a
+dataset $(x_1, y_1),\ldots,(x_n, y_n)$ is
+\[
+    \ell(a,b) = -\sum_{i=1}^n\Big(y_i\log\sigma(a + bx_i)
+    + (1-y_i)\log\big(1-\sigma(a + bx_i)\big)\Big).
+\]
+In this problem we will identify a condition under which $\ell(a,b)$
+does not have a global minimum and a codition under which $\ell(a,b)$ has a unique local minimum.
+\begin{enumerate}\setlength\itemsep{1em}
+    \item Let $\sigma$ be the sigmoid function.
+    Prove: 
     \[
-        S := \frac{(m-1)S_X^2 + (n-1)S_Y^2}{m + n - 2}
+        \sigma'(x) = \sigma(x)\big(1-\sigma(x)\big)\tag{$*$}
     \]
-    is an unbiased estimator of $\sigma^2$. It's called the \emph{pooled variance estimator}.
+    Conclude that $\sigma'(x)>0$ for all $x$.
 
-    \item Suppose, in addition to having common variance,
-    that the $X_i$ are independent of the $Y_i$.
-    What is the distribution of $S_X^2$?
-    What is its variance?
-    Compare the mean squared errors $S_X^2$, $S_Y^2$, and $S^2$.
+    \item Let $x$ and $y$ be constants and let
+    \[
+        g(a, b) = y\log\sigma(a + bx) + (1-y)\log\big(1-\sigma(a + bx)\big).
+    \]
+    Prove that
+    \[
+        \nabla g(a,b) = (y-\sigma(a + bx))\begin{bmatrix}1\\x\end{bmatrix}
+            \qquad \text{(Hint: Use $(*)$.)}
+    \]
+    and that
+    \[
+        \nabla^2g(a,b) = -\sigma'(a+bx)\begin{bmatrix}
+            1 & x\\
+            x & x^2
+        \end{bmatrix}.
+    \]
+    Show that $\nabla^2 g(a,b)$ is positive-semidefinite but not positive-definite,
+    making $g(a,b)$ convex but not strictly convex.
 
-    \item Generalize these results from the case of $K=2$ populations to that of an arbitrary $K$.
-    Compare with equation~(4.15) in~\cite{ISLR}.
+    \item By (2) and the linearity of the Hessian operator $\nabla^2$,
+    \[
+        \nabla^2 \ell(a,b) = \sum_{i=1}^n Q_i(a,b),\quad\text{where}\qquad
+        Q_i(a,b) = \sigma'(a+bx_i)\begin{bmatrix}
+            1 & x_i\\
+            x_i & x_i^2
+        \end{bmatrix}
+    \]
 
-    \item {}\textbf{[Bonus]} Can you prove analogous results with covariance matrices in place of variances?
+    \item Find a basis of the nullspace $N(Q_i(a,b))$ of $Q_i(a,b)$ whose elements do not depend on $a$ and $b$.
+    
+    \item Suppose that there are indices $i$ and $j$ such that $x_i\neq x_j$.
+    Prove that
+    \[
+        \bigcap_{i=1}^n N(Q_i(a,b)) = \left\{
+            \begin{bmatrix}
+                0\\0
+            \end{bmatrix}
+            \right\}.
+    \]
+    (Hint: Use (4).)
+
+    \item Suppose that there are indices $i$ and $j$ such that $x_i\neq x_j$.
+    Show that $\nabla^2 \ell(a,b)$ is positive-definite and, hence, that $\ell(a,b)$ is strictly convex.
+    
+    \item Conclude that if that there are indices $i$ and $j$ such that $x_i\neq x_j$, then
+    maximum likelihood estimates for $\hat a$ and $\hat b$ are unique if they exist.
+\end{enumerate}
+
+\[
+    \nabla^2 \ell(a, b) = \sum_{i=1}^n Q_i(a,b),\quad\text{where}\qquad
+    Q_i(a,b) = \sigma'(a+bx_i)\begin{bmatrix}
+        1 & x_i\\
+        x_i & x_i^2
+    \end{bmatrix}
+\]
+where
+\[
+    Q_i(a,b) = \sigma'(a+bx_i)\begin{bmatrix}
+        1 & x_i\\
+        x_i & x_i^2
+    \end{bmatrix}
+\]
+
+\[
+    \sigma'(x) = \sigma(x)(1-\sigma(x))
+\]
+
+\begin{align*}
+    \frac{\partial g}{\partial a} &= y\frac{\sigma'(a + bx)}{\sigma(a + bx)} + (1-y)\frac{(-\sigma'(a + bx))}{1-\sigma(a + bx)}\\
+    &= y(1-\sigma(a + bx)) - (1-y)\sigma(a + bx)\\
+    &= y - y\sigma(a + bx) - \sigma(a + bx) + y\sigma(a + bx)\\
+    &= y-\sigma(a + bx)
+\end{align*}
+
+
+\begin{align*}
+    \frac{\partial g}{\partial b} &= y\frac{\sigma'(a + bx)x}{\sigma(a + bx)} + (1-y)\frac{(-\sigma'(a + bx)x)}{1-\sigma(a + bx)}\\
+    &= xy(1-\sigma(a + bx)) - x(1-y)\sigma(a + bx)\\
+    &= xy - xy\sigma(a + bx) - x\sigma(a + bx) + xy\sigma(a + bx)\\
+    &= x(y-\sigma(a + bx))
+\end{align*}
+
+\begin{align*}
+    g''(b) &= -x^2\sigma'(a + bx)\\
+    &= -x^2\sigma(a + bx)(1-\sigma(a + bx))
+\end{align*}
+
+\[
+    \ell(a,b) = -\log L(a,b) = -\sum_{i=1}^n\Big(y_i\log\sigma(a + bx_i) + (1-y_i)\log\big(1-\sigma(a + bx_i)\big)\Big)
+\]
+\[
+    \ell''(a,b) = \sum_{i=1}^nx_i^2\sigma(a + bx_i)\big(1-\sigma(a + bx_i)\big)
+\]
+\bigskip
+\hrule
+\bigskip
+
+For a vector $v\in\RR^2$, write $H_v$ for the open half plane
+\[
+    H_v = \{w\in\RR^2 : v\cdot w > 0\}.
+\]
+$H_v$ is the connected component of $\RR^2 - v^\perp$ containing $v$ itself,
+$v^\perp$ being the orthogonal complement of $v$:
+\[
+    v^\perp = \{w\in\RR^2 : v\cdot w = 0\}
+\]
+Write $C_{v,w}$ for the open cone spanned by vectors $v, w\in\RR^2$, $v\neq w$:
+\[
+    C_{v,w} = \{av + bw : a,b>0\}
+\]
+\begin{enumerate}\setlength\itemsep{1em}
+    \item Let $u, v, w\in\RR^2$ be three distinct vectors.
+    Prove that the following statements are equivalent:
+    \begin{enumerate}\setlength\itemsep{0.5em}
+        \item $-u\in C_{v,w}$
+        \item $-u\in C_{v,w}$, $-w\in C_{u,v}$ and $-v\in C_{w,u}$
+        \item $H_u\cap H_v\cap H_w = \varnothing$
+        \item $H_u\cup H_v\cup H_w = \RR^2$
+    \end{enumerate}
+
+    \medskip\noindent
+    If you're having trouble writing up a formal argument here,
+    you can draw me a convincing, pretty diagram instead.
+    (If you write up a proof, you can optionally include a picture!)
+
+    \item Let $x\in\RR$. Show that the sets
+    \[
+    \left\{\begin{bmatrix}a\\b\end{bmatrix}: \lim_{t\to\infty}\sigma(ta + tbx)=0\right\}
+        \quad\text{and}\quad
+    \left\{\begin{bmatrix}a\\b\end{bmatrix}: \lim_{t\to\infty}\big(1 - \sigma(ta + tbx)\big)=0\right\}
+    \]
+    have the form $H_{\pm v}$, where $v=\begin{bmatrix}
+        1\\x
+    \end{bmatrix}$.
+
+    \item For $K>0$, identify the level curves
+    \[
+    \left\{\begin{bmatrix}a\\b\end{bmatrix}: \sigma(a + bx)=K\right\}
+        \quad\text{and}\quad
+    \left\{\begin{bmatrix}a\\b\end{bmatrix}: \big(1 - \sigma(a + bx)\big)=K\right\}
+    \]
+    as lines
+    and the level sets
+    \[
+    \left\{\begin{bmatrix}a\\b\end{bmatrix}: \sigma(a + bx)\leq K\right\}
+        \quad\text{and}\quad
+    \left\{\begin{bmatrix}a\\b\end{bmatrix}: \big(1 - \sigma(a + bx)\big)=K\right\}
+    \]
+    as half-plane translates of the form $y+H_v$ and $z+H_w$.
+
+    \item Consider a three point data set $\{(x_1, y_1), (x_2, y_2), (x_3, y_3)\}$,
+    where $x_1<x_2<x_3$ and let
+    \[
+        L(a,b)=\prod_{i=1}^3 p(x_i, y_i|a, b),
+    \]
+    where
+    \[
+        p(x_i, y_i|a, b) = \sigma(a + bx_i)^{y_i}(1 - \sigma(a + bx_i)^{y_i})^{1-y_i}.
+    \]
+    Show that
+    \[
+        \lim_{a^2+b^2\to\infty} L(a,b) = 0
+    \]
+    if and only if $y_1=y_3=1$ and $y_2=0$ or $y_1=y_3=0$ and $y_2=0$.
+    For $0<K<1$, consider the sets
+    \[
+        S_{i,K} = \{(a, b) : p_i(x_i, y_i|a,b) > K\},\qquad i=1,2,3.
+    \]
+    Prove that $S_{1,K}\cap S_{2,K}\cap S_{3,K}$ is bounded if and only if
+    either $y_1 = y_3 = 0$ and $y_2=1$ or $y_1=y_3=1$ and $y_2=0$.
+    
+    
+    Let
+    \[
+        v_i = \begin{bmatrix}
+            1\\x_i
+        \end{bmatrix},\qquad i=1,2,3.
+    \]
+    Prove that
+    \[
+        L(a,b)
+    \]
+    \begin{enumerate}
+    \item Suppose $y_1=y_3=0$ and $y_2=1$. 
     \end{enumerate}
     
+\end{enumerate}
+
+\bigskip
+\hrule
+\bigskip
+
+
+Consider fitting a dataset $(x_1, y_1),\ldots,(x_n, y_n)$ to
+the following simplified logistic regression model:
+\[
+    Y_i|X=x_i \sim p(x_i, y_i) := \sigma(bx_i)^{y_i}(1 - \sigma(bx_i))^{1-y_i}
+\]
+Here, $\sigma$ denotes the sigmoid function: $\sigma(t) = (1 + e^{-t})^{-1}$.
+Let $L(b)$ the the likelihood function associated this dataset/model.
+
+Suppose that our dataset has the following property:
+\[
+    \text{$x_i<0$ if and only if $y_i=0$}\tag{$*$}
+\]
+Prove that
+\[
+    \lim_{b\to\infty}L(b) = 1.
+\]
+What can we say about $\argmax_b L(b)$ in this case?
+
+\sol
+
+Suppose that $x_i<0$ and $y_i=0$. Then $e^{-bx_i}\to \infty$ as $b\to\infty$. It follows that
+\begin{align*}
+    \lim_{b\to\infty}p(x_i, y_i) =  \lim_{b\to\infty} \big(1 - \sigma(bx_i)) = 1 - 0 = 1.
+\end{align*}
+If $x_i>0$ and $y_i=1$, then $e^{-bx_i}\to 0$ as $b\to\infty$. It follows that
+\[
+    \lim_{b\to\infty}p(x_i, y_i) =  \lim_{b\to\infty} \sigma(bx_i) = 1.
+\]
+Therefore, by property $(*)$,
+\[
+    \lim_{b\to\infty} p(x_i, y_i)=1
+\]
+for all $i=1,\ldots,n$. Consequently,
+\[
+    \lim_{b\to\infty} L(b) = \lim_{b\to\infty}\prod_{i=1}^n p(x_i, y_i) = 1.
+\]
+
+
+Suppose, now, that there are indices $i$ and $j$ such that
+\[
+    \text{$x_i<0$ and $y_i=1$}\quad\text{and}\quad
+    \text{$x_j>0$ and $y_j=0$}.
+\]
+In particular, property $(*)$ is not satisfied.
+Prove that
+\[
+    \lim_{b\to\pm\infty}L(b) = 0.
+\]
+What can we say about $\argmax_b L(b)$ in this case?
+
+\sol
+As $y_i=0$, $p(x_i, y_i|b) = \sigma(bx_i)$. As $x_i<0$, $\sigma(bx_i)\to 0$ as $b\to\infty$.
+Thus
+\[
+    \lim_{b\to\infty}p(x_i, y_i|b) =  \lim_{b\to\infty} \sigma(bx_i) = 0.
+\]
+As $y_j=1$, $p(x_j, y_j|b) = 1-\sigma(bx_j)$. As $x_j>0$, $1-\sigma(bx_j)\to 0$ as $b\to\infty$.
+Thus
+\[
+    \lim_{b\to\infty}p(x_j, y_j|b) =  \lim_{b\to\infty} \sigma(bx_j) = 0.
+\]
+
+
+\bigskip\hrule\bigskip
+
+Let $X_1,\ldots,X_m$ and $Y_1,\ldots,Y_n$ be random samples from normally distributed populations with 
+means $\mu_X$ and $\mu_Y$ and variances $\sigma_X^2$ and $\sigma_Y^2$, respectively.
+Let $S_X^2$ and $S_Y^2$ be the standard unbiased estimators of $\sigma_X^2$ and $\sigma_Y^2$,
+respectively.
+\begin{enumerate}\setlength\itemsep{1em}
+\item Suppose $\sigma_X^2 = \sigma_Y^2$ and write $\sigma^2$ for this common value.
+\[
+    S^2 := \frac{(m-1)S_X^2 + (n-1)S_Y^2}{m + n - 2}
+\]
+is an unbiased estimator of $\sigma^2$. It's called the \emph{pooled variance estimator}.
+
+\sol
+Since $S_X^2$ and $S_Y^2$ are unbiased estimators of $\sigma_X$ and $\sigma_Y$, respectively,
+\begin{align*}
+    \EE[S^2] &= \frac{m-1}{m + n - 2}\EE[S_X^2] + \frac{n-1}{m+n-2}\EE[S_Y^2]\\
+    &= \frac{m-1}{m + n - 2}\sigma_X^2 + \frac{n-1}{m+n-2}\sigma_Y^2\\
+    &= \frac{m-1}{m + n - 2}\sigma^2 + \frac{n-1}{m+n-2}\sigma^2&\text{(as $\sigma_X^2 = \sigma^2 = \sigma_Y^2$)}\\
+    &= \sigma^2
+\end{align*}
+
+
+\item Suppose, in addition to having common variance,
+that the $X_i$ are independent of the $Y_i$.
+What is the distribution of
+\[
+\frac{(m+n-2)S^2}{\sigma^2}?
+\]
+What is the variance of $S^2$?
+
+\sol
+Since $S_X^2$ and $S_Y^2$ are independent,
+\[
+    \frac{(m-1)S_X^2}{\sigma^2}\sim \chi^2_{m-1}
+    \quad\text{and}\quad
+    \frac{(n-1)S_Y^2}{\sigma^2}\sim \chi^2_{n-1},
+\]
+and it follows from general properties of $\chi^2$-distributions that
+\[
+    \frac{(m+n-2)S^2}{\sigma^2}
+    = \frac1{\sigma^2}\big((m-1)S_X^2 + (n-1)S_Y^2\big)\sim \chi^2_{m+n-2}.
+\]
+Since $ \chi^2_{m+n-2}$-distributed random variable has variance $2(m+n-2)$, it follows that
+\[
+    \Var S^2 = \frac{2\sigma^4}{m+n-2}.
+\]
+
+
+\item[($3^*$)] Generalize these results from the case of $K=2$ populations to that of an arbitrary $K$.
+Compare with equation~(4.15) in~\cite{ISLR}.
+
+\item[($4^*$)] Can you prove analogous results with covariance matrices in place of scalar variances?
+\end{enumerate}
+
+
+
+
+Since $S_X^2$ and $S_Y^2$ are independent,
+\[
+    \frac{(m-1)S_X^2}{\sigma^2}\sim \chi^2_{m-1}
+    \quad\text{and}\quad
+    \frac{(n-1)S_Y^2}{\sigma^2}\sim \chi^2_{n-1},
+\]
+and it follows from general properties of $\chi^2$-distributions that
+\[
+    \frac{(m+n-2)S^2}{\sigma^2}
+    = \frac1{\sigma^2}\big((m-1)S_X^2 + (n-1)S_Y^2\big)\sim \chi^2_{m+n-2}.
+\]
+Since $ \chi^2_{m+n-2}$-distributed random variable has variance $2(m+n-2)$, it follows that
+\[
+    \Var S^2 = \frac{2\sigma^4}{m+n-2}.
+\]
+
+
+
+
+
+
     \bigskip\hrule\bigskip
     \cite[Exercise 12.16]{CB}
     This exercise examines an extreme case in which the likelihood equations for logistic regression have no solution.
@@ -50,7 +379,19 @@
         \item Observe that, empirically, $\Prob(Y=1|X=0)=1$ and $\Prob(Y=1|X=1)=0.5$.
     Let $\sigma(t)=(1+e^{-t})^{-1}$ be the sigmoid function.
     Are there $a$ and $b$ such that
-    $\sigma(a + b\cdot 0) = 1$ and $\sigma(a+b\cdot 1)=0.5$?
+    $\sigma(a + b\cdot 0) = 1$ or $\sigma(a+b\cdot 1)=0.5$?
+
+    \sol
+    \[
+        \sigma(x) = \frac{1}{1 + e^{-x}}
+    \]
+    Since the exponential function takes values in $(0,\infty)$,
+    \[
+        0< \sigma(x) < 1,
+    \]
+    for every $x\in\RR$. In particular, there are no numbers $a$ and $b$ such that
+    $\sigma(a + b\cdot 0) = 1$.
+    Clearly, $\sigma(0) = \sigma(0+0\cdot 1) = 0.5$.
 
     \item Let $\cL(a,b)$ be the likelihood function associated to fitting a
     logistic regression model to this data set. Show that
@@ -108,7 +449,24 @@
     \[
         \sum_{k=1}^K\pi_k\mu_k = \mu
     \]
+    
+    \bigskip
     \hfill
+    \bigskip
+
+    Suppose
+    \begin{align*}
+        Y&\sim \Cat\left(\tfrac1K,\ldots,\tfrac1K\right),\\
+        \vX|Y=k&\sim N(\vmu_k,\sigma I).
+    \end{align*}
+    Show that
+    \[
+        \argmin_k p(Y=k|\vX=\vx) = \argmin_k \|\vx - \vmu_k\|.
+    \]
+
+    \bigskip
+    \hfill
+    \bigskip
 
     Logistic regression (with and without ridge regularization, with and without PCA), LDA, Gaussian na\"ive Bayes, for breast cancer data set. Plot in 2d with decision boundary. Optional: Lasso
 
@@ -117,9 +475,178 @@
     Ridge regression via constrained optimization.
 
 
+    \section{Total variation $=$ variance within $+$ variance between}
+
+    Let $X$ and $Y$ be jointly distributed random variables, where
+    \begin{align*}
+        Y &\sim \Cat(\pi_1,\ldots,\pi_K), & &\sum \pi_k=1,\\
+        X\mid Y=k &\sim N(\mu_k, \sigma_k^2), & &k=1,\ldots,K.
+    \end{align*}
+    Assume that the $\mu_k$ are pairwise distinct.
+    Prove that
+    \[
+        \EE[X] = \sum_{k=1}^K \pi_k\mu_k
+    \]
+    and that
+    \[
+        \Var X = \sum_{k=1}^K \pi_k\sigma_k^2 + \sum_{k=1}^K \pi_k(\mu_k - \mu)^2.
+    \]
+    To establish the decomposition of the variance, you might want to use the
+    \emph{law of total variation:}
+    \[
+    \Var X = \EE(\Var(X|Y)) + \Var \EE(X|Y).
+    \]
+
+    The random variable $X$ has marginal density $p(x)$, where
+    \[
+        p(x) = \sum_{k=1}^K p(x,k) = \sum_{k=1}^K p(k)p(x|k) = \sum_{k=1}^K \pi_k p(x|k).
+    \]
+    Therefore,
+    \[
+        \EE[X] = \sum_{k=1}^K \pi_k \EE[X_k]
+    \]
+    where $X_k$ is a random variable with density $p(x|k)$.
+    By hypothesis, $X_k$ has expected value $\mu_k$. Therefore,
+    \[
+        \EE[X] = \sum_{k=1}^K \pi_k \mu_k.
+    \]
+
+    Since $\Var(X|Y=k) = \sigma_k^2$,
+    \[
+        \EE[\Var(X|Y)] = \sum_{k=1}^K p(Y=k)\Var(X|Y=k) = \sum_{k=1}^K \pi_k\sigma_k^2.
+    \]
+    
+    Let $\mu=\EE[X]$.
+    By the \emph{law of total expectation},
+    \[
+        \EE[\EE[X|Y]] = \EE[X] = \mu.
+    \]
+    Let $Z=\EE[X|Y]$. Then set of values of $Z$ is $\{\mu_1,\ldots,\mu_K\}$.
+    Since the $\mu_k$ are pairwise distinct,
+    \[
+        \Prob[Z = \mu_k] = p(Y=k) = \pi_k.
+    \]
+    Therefore,
+    \[
+        \Var Z = \sum_{k=1}^K \Prob[Z = \mu_k](\mu_k - \mu)^2
+        = \sum_{k=1}^K \pi_k\big(\mu_k - \mu\big)^2.
+    \]
+
+    Let $x_1,\ldots,x_n$ be numbers and set 
+    \[
+        \mu = \frac1{n}\sum_{i=1}^n x_i,\qquad 
+        \sigma^2 = \frac1{n}\sum_{i=1}^n (x_i - \mu)^2.
+    \]
+    Suppose that
+    \[
+        \{1,\ldots,n\} = \bigsqcup_{k=1}^K I_k\qquad \text{(disjoint union)}
+    \]
+    with
+    \[
+        n_k := |I_k| > 0.
+    \]
+    Set
+    \[
+        \mu_k = \frac1{n_k}\sum_{i\in I_k}^n x_i,\qquad 
+        \sigma_k^2 = \frac1{n_k}\sum_{i\in I_k}^n (x_i - \mu_k)^2
+    \]
+    Prove that
+    \[
+        \sigma^2 = \sum_{k=1}^K \pi_k\sigma_k^2 + \sum_{k=1}^K \pi_k (\mu_k - \mu)^2,
+        \quad\text{where}\quad
+        \pi_k = \frac{n_k}n.
+    \]
+    (This is an ``algebraic version'' of the law of total variance)
+
+    \begin{align*}
+        \frac1{n}\sum_{i=1}^n (x_i - \mu)^2 &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}(x_i - \mu)^2\\
+        &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}(x_i - \mu_k + \mu_k - \mu)^2\\
+        &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}
+        \big\{(x_i - \mu_k)^2 + (\mu_k - \mu)^2 + 2(x_i - \mu_k)(\mu_k - \mu)\big\}\\
+        &= \frac1{n}\sum_{k=1}^K n_k\frac1{n_k}\sum_{i\in I_k}(x_i - \mu_k)^2
+        + \frac1{n}\sum_{k=1}^K(\mu_k - \mu)^2\sum_{i\in I_k}1\\
+        &\qquad\qquad + \frac2{n}\sum_{k=1}^K (\mu_k - \mu)\sum_{i\in I_k}(x_i - \mu_k)\\
+        &= \sum_{k=1}^K \frac{n_k}n \sigma_k^2 + \sum_{k=1}^K \frac{n_k}n (\mu_k - \mu)^2 + 0\\
+        &= \sum_{k=1}^K \pi_k \sigma_k^2 + \sum_{k=1}^K \pi_k (\mu_k - \mu)^2
+    \end{align*}
+
+    Define a probability space $(\Omega, \mu)$ by
+    \[
+        \Omega = \{x_1,\ldots,x_n\}\times \{1,\ldots,K\},\quad
+        \mu\big(\{(x_i, k)\}\big)= p_{ik} := \begin{cases}
+            \dfrac1n&\text{if $i\in I_k$,}\\[2ex]
+            0&\text{otherwise.}
+        \end{cases}
+    \]
+    Note that $\mu$ is, indeed, a probability measure on $\Omega$:
+    \[
+        \sum_{(i, k)\in\Omega} p_{ik} =\sum_{k=1}^K\sum_{i=1}^n p_{ik}
+        = \sum_{k=1}^K\sum_{i\in I_k}\frac1n = \sum_{k=1}^n\frac{n_k}n = 1
+    \]
+    Define random variables $X$ and $Y$ on $\Omega$ by
+    \[
+        X(x_i, k) = x_i\quad\text{and}\quad Y(x_i, k) = k.
+    \]
+    Then
+    \[
+        \mu = \EE[X] = \sum_{k=1}^K\sum_{i=1}^n p_{ik}x_i
+        = \sum_{k=1}^K\sum_{i\in I_k}\frac1n x_i
+        = \frac1n\sum_{k=1}^K\sum_{i\in I_k} x_i = \frac1n\sum_{i=1}^n x_i.
+    \]
+    Let $Z=\EE[X|Y]$, so that
+    \[
+        Z(k) = \EE[X|Y = k]
+        = \frac{\sum_{i=1}^np_{ik}x_i}{\sum_{i=1}^np_{ik}}
+        = \frac{\sum_{i\in I_k}x_i}{\sum_{i\in I_k}^n1}
+        = \frac1{n_k}\sum_{i\in I_k}x_i = \mu_k.
+    \]
+    \begin{align*}
+        \Var[X|Y=k] &= \EE[(X - Z)^2|Y=k]\\
+        &= \frac{\sum_{i=1}^np_{ik}(X(i) - Z(k))^2}{\sum_{i=1}^n p_{ik}}\\
+        &= \frac{\frac1n\sum_{i\in I_k}(x_i - \mu_k)^2}{\sum_{i\in I_k} \frac1n}\\
+        &= \frac1{n_k}\sum_{i\in I_k}(x_i - \mu_k)^2\\
+        &= \sigma_k^2
+    \end{align*}
+
+    \begin{align*}
+        \EE\left[\Var[X|Y]\right] &= \sum_{k=1}^K\Prob(Y=k)\Var[X|Y=k]\\
+        &=\sum_{k=1}^K\left(\sum_{(i,k)}p_{ik}\right)\sigma_k^2\\
+        &=\sum_{k=1}^K\frac{n_k}n\sigma_k^2\\
+        &=\sum_{k=1}^K\pi_k\sigma_k^2
+    \end{align*}
+    
+    Finally,
+    \begin{align*}
+        \Var Z &= \EE\left[(Z - \EE[Z])^2\right]\\
+        &= \EE\left[(Z - \mu)^2\right] &\text{(by the law of total expectation)}\\
+        &= \sum_{k=1}^K\Prob(Z=\mu_k)(\mu_k - \mu)^2\\
+        &= \sum_{k=1}^K\Prob(Y=k)(\mu_k - \mu)^2&\text{(as $k= \ell \Longleftrightarrow \mu_k= \mu_\ell$)} \\
+        &= \sum_{k=1}^K\left(\sum_{(i, k)}p_{ik}\right)(\mu_k - \mu)^2\\
+        &= \sum_{k=1}^K\pi_k(\mu_k - \mu)^2.
+    \end{align*}
+
+
+\subsection{Matrix version}
+\begin{align*}
+    \frac1{n}\sum_{i=1}^n (x_i - \mu)(x_i - \mu)^T &=
+    \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}(x_i - \mu)(x_i - \mu)^T\\
+    &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}((x_i - \mu_k) + (\mu_k - \mu))((x_i - \mu_k) + (\mu_k - \mu))^T\\
+    &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}
+    \big\{(x_i - \mu_k)(x_i - \mu_k)^T + (\mu_k - \mu)(\mu_k - \mu)^T\\
+    &\qquad\qquad+ (x_i - \mu_k)(\mu_k - \mu)^T + (\mu_k - \mu)(x_i - \mu_k)^T\big\}\\
+    &= \frac1{n}\sum_{k=1}^K n_k\frac1{n_k}\sum_{i\in I_k}(x_i - \mu_k)(x_i - \mu_k)^T
+    + \frac1{n}\sum_{k=1}^K(\mu_k - \mu)(\mu_k - \mu)^T\sum_{i\in I_k}1\\
+    &\qquad\qquad + \frac1{n}\sum_{k=1}^K \left\{\sum_{i\in I_k}(x_i - \mu_k)\right\}(\mu_k - \mu)^T\\
+    &\qquad\qquad+ \frac1{n}\sum_{k=1}^K (\mu_k - \mu)\sum_{i\in I_k}(x_i - \mu_k)^T\\
+    &= \sum_{k=1}^K \frac{n_k}n \Sigma_k^2 + \sum_{k=1}^K \frac{n_k}n (\mu_k - \mu)(\mu_k - \mu)^T + 0 + 0\\
+    &= \sum_{k=1}^K \pi_k \Sigma_k^2 + \sum_{k=1}^K \pi_k (\mu_k - \mu)(\mu_k - \mu)^T
+\end{align*}
+
+
+
 
     \begin{thebibliography}{99}
-        \bibitem{CB}Casella, Bergger, \emph{Statistical Inference (2nd ed.)}, Duxbury, 2002.
+        \bibitem{CB}Casella, Berger, \emph{Statistical Inference (2nd ed.)}, Duxbury, 2002.
         % \bibitem{HMC}Hogg, McKean, Craig, \emph{Introduction to Mathematical Statistics (7th ed.)}, Pearson, 2013.
         \bibitem{ISLR}
     \end{thebibliography}

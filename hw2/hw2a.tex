@@ -1,0 +1,190 @@
+\documentclass[12pt]{exam}
+
+\usepackage{amsmath, amssymb, amsthm, url}
+\input{../macros.tex}
+\newcommand{\sol}{\bigskip\noindent\textbf{Solution: }}
+
+\newcommand{\vmu}{\boldsymbol{\mu}}
+\newcommand{\vSigma}{\boldsymbol{\Sigma}}
+\DeclareMathOperator{\Cat}{Categorical}
+
+\begin{document}
+\title{STAT 543/641 -- Winter 2019 -- Homework \#2}
+
+\date{Due Wednesday, March 20, 2019}
+\maketitle
+
+
+\textbf{Notation:} Suppose $(x_1,y_1,\ldots,(x_n, y_n)\in\RR\times \{0,1\}$. Set
+\begin{align*}
+    \sigma(t) &= \frac1{1+e^{-t}}\\[2ex]
+    p_i(a,b) &= \sigma(a + bx_i)^{y_i}\big(1 - \sigma(a + bx_i)\big)^{1-y_i}\\[2ex]
+    \ell_i(a,b) &= -\log p_i(a,b)\\
+    &= -y_i\log\sigma(a + bx_i) - (1-y_i)\log\big(1-\sigma(a + bx_i)\big)\\[2ex]
+    \ell(a,b) &= \sum_{i=1}^n \ell_i(a,b)
+\end{align*}
+
+
+
+\begin{questions}
+
+\question In this problem, we establish a sufficient condition for the uniqueness of
+maximum likelihood estimates for univariate logistic regression coefficients,
+assuming such estimates exist.
+
+\begin{parts}\setlength\itemsep{1em}
+    \part Prove: 
+    \[
+        \sigma'(x) = \sigma(x)\big(1-\sigma(x)\big)\tag{$*$}
+    \]
+    Conclude that $\sigma'(x)>0$ for all $x$.
+
+    \part Prove that
+    \[
+        \nabla \ell_i(a,b) = (y_i-\sigma(a + bx_i))\begin{bmatrix}1\\x_i\end{bmatrix}
+            \qquad \text{(Hint: Use $(*)$.)}
+    \]
+    and that
+    \[
+        \nabla^2\ell_i(a,b) = -\sigma'(a+bx_i)\begin{bmatrix}
+            1 & x_i\\
+            x_i & x_i^2
+        \end{bmatrix}.
+    \]
+    Deduce that $\nabla^2 g(a,b)$ is positive-semidefinite but not positive-definite,
+    making $g(a,b)$ convex but not strictly convex.
+
+    \part Find a basis of the nullspace $N(\nabla^2\ell_i(a,b))$ of $\nabla^2\ell_i(a,b)$ whose elements do not depend on $a$ and $b$.
+    
+    \part Suppose that there are indices $i$ and $j$ such that $x_i\neq x_j$.
+    Prove that
+    \[
+        \bigcap_{i=1}^n N(\nabla^2\ell_i(a,b)) = \left\{
+            \begin{bmatrix}
+                0\\0
+            \end{bmatrix}
+            \right\}.
+    \]
+    (Hint: Use (4).)
+
+    \item Suppose that there are indices $i$ and $j$ such that $x_i\neq x_j$.
+    Show that $\nabla^2 \ell(a,b)$ is positive-definite and, hence, that $\ell(a,b)$ is strictly convex.
+    
+    \item Conclude that if that there are indices $i$ and $j$ such that $x_i\neq x_j$, then
+    maximum likelihood estimates for $\hat a$ and $\hat b$ are unique if they exist.
+\end{parts}
+
+    
+    \question In this problem, we establish a sufficient condition for the existence of
+    maximum likelihood estimates for univariate logistic regression coefficients.
+
+    Consider fitting a univariate logistic regression model to a dataset
+    $(x_1, y_1),\ldots,(x_n, y_n)$ satisfying
+    \[
+        x_1<x_2<\cdots<x_n.
+    \]
+
+
+    \begin{parts}
+        \part Prove that $\ell_i(a,b)>0$ for all $(a,b)\in\RR^2$.
+
+        \part Let
+        \[
+            H_i = \left\{\begin{bmatrix}
+                v_1\\v_2
+            \end{bmatrix}\in\RR^2 : \lim_{t\to\infty}\ell_i(tv_1, tv_2) = \infty\right\}
+        \]
+        Find a vector $\vw\in\RR^2$ such that $H_i=H(\vw_i)$, where
+        \[
+            H(\vw_i) = \left\{\vv\in\RR^2 : \vv\cdot\vw_i > 0\right\}.
+        \]
+
+        \part
+        Let $\vu,\vv,\vw\in\RR^2-\{\vzero\}$. Show that
+        \[
+            H(\vu) \cup H(\vv) \cup H(\vw) = \RR^2-\{\vzero\}
+        \]
+        if abd only there are $a,b>0$ such that $-\vu = a\vv + v\vw$.
+
+        \part Consider the following condition on a triple of indices $(i,j,k)$:
+        \[
+            \text{$y_i = y_k = 0$ and $y_j=1$}
+            \qquad\text{\textit{or}}\qquad
+            \text{$y_i = y_k = 1$ and $y_j=0$}\tag{\dag}
+        \]
+        Suppose $1\leq i<j<k\leq n$. 
+        Prove that $(i,j,k)$ satisfies (\dag) if and only if
+        \[
+            H_i\cup H_j \cup H_k = \RR^2-\{\vzero\}.
+        \]
+
+        \part Suppose that $(i,j,k)$ is an increasing sequence of indices that satisfies (\dag).
+        Prove that, for all $K>0$, the set
+        \[
+            S_K := \{(a,b) : \ell(a,b) \leq K\}
+        \]
+        contains no ray from the origin, i.e., no set of the form
+        $\{t\vv : t\geq 0\}$ where $\vv\in\RR^2-\{\vzero\}$.
+
+        \part Use the following facts to deduce that $S_K$ is bounded for all $K>0$.
+        $S_K$ is evidently closed, so it's compact.
+            \begin{subparts}
+                \subpart If $f:\RR^n\to\RR$ is a convex function,
+            then $\{\vx\in\RR^n : f(\vx)| \leq K\}$ is a convex set.
+            \subpart If $C$ is a convex set that contains no ray, then $C$ is bounded.
+            \end{subparts} 
+        
+        \part Let $K>0$ be such that $S_K$ is nonempty and let
+        \[
+            m = \inf_{(a,b)\in S_K}\ell(a,b).
+        \]
+        Explain why there exists a point $(\hat a, \hat b)\in S_K$ such that $\ell(\hat a, \hat b)=m$
+        and why $m$ is, in fact, the global minimum of $\ell$.
+
+        \part Prove that $(\hat a, \hat b)$ is the unique point at which $\ell$ takes on its minimum value.
+
+
+    \end{parts}
+
+    \question
+    Let $X_1,\ldots,X_m$ and $Y_1,\ldots,Y_n$ be random samples from normally distributed populations with 
+means $\mu_X$ and $\mu_Y$ and variances $\sigma_X^2$ and $\sigma_Y^2$, respectively.
+Let $S_X^2$ and $S_Y^2$ be the standard unbiased estimators of $\sigma_X^2$ and $\sigma_Y^2$,
+respectively.
+\begin{parts}
+\part Suppose $\sigma_X^2 = \sigma_Y^2$ and write $\sigma^2$ for this common value.
+\[
+    S^2 := \frac{(m-1)S_X^2 + (n-1)S_Y^2}{m + n - 2}
+\]
+is an unbiased estimator of $\sigma^2$. It's called the \emph{pooled variance estimator}.
+
+\part Suppose, in addition to having common variance,
+that the $X_i$ are independent of the $Y_i$.
+What is the distribution of
+\[
+\frac{(m+n-2)S^2}{\sigma^2}?
+\]
+What is the variance of $S^2$?
+
+
+
+\part (Do not hand in.) Generalize these results from the case of $K=2$ populations to that of an arbitrary $K$.
+Compare with equation~(4.15) in~\cite{ISLR}.
+
+\part (Do not hand in.) Can you prove analogous results with covariance matrices in place of scalar variances?
+\end{parts}
+
+\question Applied problem to be added...
+
+
+\end{questions}
+
+
+    \begin{thebibliography}{99}
+        \bibitem{ISLR} Gareth James, Daniela Witten, Trevor Hastie, and Robert Tibshirani,
+        \emph{Introduction to Statistical Learning Theory with Applications in R},
+        \url{http://www-bcf.usc.edu/~gareth/ISL/}.
+    \end{thebibliography}
+
+
+\end{document}

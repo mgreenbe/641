@@ -1,0 +1,315 @@
+\documentclass[12pt]{amsart}
+
+\input{../macros.tex}
+
+\newcommand{\vmu}{\boldsymbol{\mu}}
+\newcommand{\vSigma}{\boldsymbol{\Sigma}}
+\DeclareMathOperator{\Cat}{Categorical}
+
+\begin{document}
+    \title{STAT 543/641 -- Winter 2019 -- Homework \#2}
+
+    \author{Due March ??, 2019}
+    \maketitle
+
+    \bigskip\hrule\bigskip
+
+    Let $X_1,\ldots,X_m$ and $Y_1,\ldots,Y_n$ be random samples from populations with 
+    means $\mu_X$ and $\mu_Y$ and variances $\sigma_X^2$ and $\sigma_Y^2$, respectively.
+    Let $S_X^2$ and $S_Y^2$ be the standard unbiased estimators of $\sigma_X^2$ and $\sigma_Y^2$,
+    respectively.
+    \begin{enumerate}\setlength\itemsep{0.5em}
+    \item Suppose $\sigma_X^2 = \sigma_Y^2$ and write $\sigma^2$ for this common value.
+    \[
+        S := \frac{(m-1)S_X^2 + (n-1)S_Y^2}{m + n - 2}
+    \]
+    is an unbiased estimator of $\sigma^2$. It's called the \emph{pooled variance estimator}.
+
+    \item Suppose, in addition to having common variance,
+    that the $X_i$ are independent of the $Y_i$.
+    What is the distribution of $S_X^2$?
+    What is its variance?
+    Compare the mean squared errors $S_X^2$, $S_Y^2$, and $S^2$.
+
+    \item Generalize these results from the case of $K=2$ populations to that of an arbitrary $K$.
+    Compare with equation~(4.15) in~\cite{ISLR}.
+
+    \item {}\textbf{[Bonus]} Can you prove analogous results with covariance matrices in place of variances?
+    \end{enumerate}
+    
+    \bigskip\hrule\bigskip
+    \cite[Exercise 12.16]{CB}
+    This exercise examines an extreme case in which the likelihood equations for logistic regression have no solution.
+    
+    \noindent
+    Consider the following $20$-point data set:
+    \begin{multline*}
+        (0, 1), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1)\\
+        (1, 0), (1, 0), (1, 0), (1, 0), (1, 0), (1, 1), (1, 1), (1, 1), (1, 1), (1, 1)
+    \end{multline*}
+    \begin{enumerate}\setlength\itemsep{0.5em}
+        \item Observe that, empirically, $\Prob(Y=1|X=0)=1$ and $\Prob(Y=1|X=1)=0.5$.
+    Let $\sigma(t)=(1+e^{-t})^{-1}$ be the sigmoid function.
+    Are there $a$ and $b$ such that
+    $\sigma(a + b\cdot 0) = 1$ and $\sigma(a+b\cdot 1)=0.5$?
+
+    \item Let $\cL(a,b)$ be the likelihood function associated to fitting a
+    logistic regression model to this data set. Show that
+    \[
+        L := \lim_{b\to\infty}\cL(-b, b) = \sup_{(a, b)\in\RR^2}\cL(a,b) < \infty
+    \]
+    and that $\cL(a,b)\neq L$ for any $(a,b)\in\RR^2$.
+    What are
+    \[
+        \lim_{b\to\infty}\sigma(-b + b\cdot 0)\quad\text{and}\quad
+        \lim_{b\to\infty}\sigma(-b + b\cdot 1)?
+    \]
+    \end{enumerate}
+
+
+    Let $(\vX, Y)$ be jointly distributed,
+    where $\vX$ is a $p$-dimensional random vector and $Y$ takes values in $\{1,\ldots,K\}$.
+    Suppose that, for each $k$, $\vX|Y=k$ has Gaussian distribution with mean $\vmu_k$ and
+    and variance $\Sigma$, with the latter independent of $k$.
+
+    Consider a data set $(\vx^{(1)}, y^{(1)}),\ldots,(\vx^{(n)}, y^{(n)})$, where
+    $\vx^{(i)}\in\RR^{1\times p}$ and $y^{(i)}\in\{1,\ldots,K\}$.
+    For $1\leq k\leq K$, let
+    \[
+        I_k = \{i : y^{(i)} = k\},\quad n_k = |I_k|,\quad \hat\pi_k = \frac{n_k}{n}.
+    \]
+    Define sample means $\vmu_k$ and a pooled sample covariance $\vSigma$ by
+    \begin{align*}
+        \hat \vmu_k =\hat\vmu_{k,\vx}&= \frac1{n_k}\sum_{i\in I_k} \vx^{(i)}\in\RR^{p\times 1},\\
+        \hat \vSigma =\hat\vSigma_{\vx}&= \frac1{n-K}\sum_{k=1}^K\sum_{i\in I_k}
+        (\vx^{(i)} - \hat \vmu_k)^T(\vx^{(i)} - \hat \vmu_k)\in\RR^{p\times p}.
+    \end{align*}
+    Define linear discriminant functions, $\delta_k=\delta_{k,\vx}$, by
+    \[
+        \delta_k(\vv)=\delta_{k,\vx}(\vv) = \vv\hat\vSigma\hat\vmu_k^T - \frac12 \hat\vmu_k\hat\vSigma\hat\vmu_k^T + \log\hat\pi_k,
+        \quad \vv\in\RR^{p\times 1}.
+    \]
+    
+    Let $\va\in\RR^{p\times 1}$ and let
+    \[
+        \vw^{(i)} = \vx^{(i)} - \va.
+    \]
+    \[
+        \hat\vmu_{k,\vw} = \hat\vmu_{k,\vx} - \va,\quad
+        \Sigma_w = \Sigma_x
+    \]
+    \[
+        \delta_{k_1,w}(v - a) - \delta_{k_2, w}(v-a) = \delta_{k_1,x}(v) - \delta_{k_2,x}(v) 
+    \]
+    Let $U\in\RR^{p\times p}$ be an orthogonal matrix and let $w^{(i)}=Ux^{(i)}$.
+    Then
+    \[
+        \delta_{k, Ux}(Uv) = \delta_x(v).
+    \]
+    \[
+        \sum_{k=1}^K\pi_k\mu_k = \mu
+    \]
+    
+    \bigskip
+    \hfill
+    \bigskip
+
+    Suppose
+    \begin{align*}
+        Y&\sim \Cat\left(\tfrac1K,\ldots,\tfrac1K\right),\\
+        \vX|Y=k&\sim N(\vmu_k,\sigma I).
+    \end{align*}
+    Show that
+    \[
+        \argmin_k p(Y=k|\vX=\vx) = \argmin_k \|\vx - \vmu_k\|.
+    \]
+
+    \bigskip
+    \hfill
+    \bigskip
+
+    Logistic regression (with and without ridge regularization, with and without PCA), LDA, Gaussian na\"ive Bayes, for breast cancer data set. Plot in 2d with decision boundary. Optional: Lasso
+
+    Document classification with multinomial na\"ive Bayes
+
+    Ridge regression via constrained optimization.
+
+
+    \section{Total variation $=$ variance within $+$ variance between}
+
+    Let $X$ and $Y$ be jointly distributed random variables, where
+    \begin{align*}
+        Y &\sim \Cat(\pi_1,\ldots,\pi_K), & &\sum \pi_k=1,\\
+        X\mid Y=k &\sim N(\mu_k, \sigma_k^2), & &k=1,\ldots,K.
+    \end{align*}
+    Assume that the $\mu_k$ are pairwise distinct.
+    Prove that
+    \[
+        \EE[X] = \sum_{k=1}^K \pi_k\mu_k
+    \]
+    and that
+    \[
+        \Var X = \sum_{k=1}^K \pi_k\sigma_k^2 + \sum_{k=1}^K \pi_k(\mu_k - \mu)^2.
+    \]
+    To establish the decomposition of the variance, you might want to use the
+    \emph{law of total variation:}
+    \[
+    \Var X = \EE(\Var(X|Y)) + \Var \EE(X|Y).
+    \]
+
+    The random variable $X$ has marginal density $p(x)$, where
+    \[
+        p(x) = \sum_{k=1}^K p(x,k) = \sum_{k=1}^K p(k)p(x|k) = \sum_{k=1}^K \pi_k p(x|k).
+    \]
+    Therefore,
+    \[
+        \EE[X] = \sum_{k=1}^K \pi_k \EE[X_k]
+    \]
+    where $X_k$ is a random variable with density $p(x|k)$.
+    By hypothesis, $X_k$ has expected value $\mu_k$. Therefore,
+    \[
+        \EE[X] = \sum_{k=1}^K \pi_k \mu_k.
+    \]
+
+    Since $\Var(X|Y=k) = \sigma_k^2$,
+    \[
+        \EE[\Var(X|Y)] = \sum_{k=1}^K p(Y=k)\Var(X|Y=k) = \sum_{k=1}^K \pi_k\sigma_k^2.
+    \]
+    
+    Let $\mu=\EE[X]$.
+    By the \emph{law of total expectation},
+    \[
+        \EE[\EE[X|Y]] = \EE[X] = \mu.
+    \]
+    Let $Z=\EE[X|Y]$. Then set of values of $Z$ is $\{\mu_1,\ldots,\mu_K\}$.
+    Since the $\mu_k$ are pairwise distinct,
+    \[
+        \Prob[Z = \mu_k] = p(Y=k) = \pi_k.
+    \]
+    Therefore,
+    \[
+        \Var Z = \sum_{k=1}^K \Prob[Z = \mu_k](\mu_k - \mu)^2
+        = \sum_{k=1}^K \pi_k\big(\mu_k - \mu\big)^2.
+    \]
+
+    Let $x_1,\ldots,x_n$ be numbers and set 
+    \[
+        \mu = \frac1{n}\sum_{i=1}^n x_i,\qquad 
+        \sigma^2 = \frac1{n}\sum_{i=1}^n (x_i - \mu)^2.
+    \]
+    Suppose that
+    \[
+        \{1,\ldots,n\} = \bigsqcup_{k=1}^K I_k\qquad \text{(disjoint union)}
+    \]
+    with
+    \[
+        n_k := |I_k| > 0.
+    \]
+    Set
+    \[
+        \mu_k = \frac1{n_k}\sum_{i\in I_k}^n x_i,\qquad 
+        \sigma_k^2 = \frac1{n_k}\sum_{i\in I_k}^n (x_i - \mu_k)^2
+    \]
+    Prove that
+    \[
+        \sigma^2 = \sum_{k=1}^K \pi_k\sigma_k^2 + \sum_{k=1}^K \pi_k (\mu_k - \mu)^2,
+        \quad\text{where}\quad
+        \pi_k = \frac{n_k}n.
+    \]
+    (This is an ``algebraic version'' of the law of total variance)
+
+    \begin{align*}
+        \frac1{n}\sum_{i=1}^n (x_i - \mu)^2 &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}(x_i - \mu)^2\\
+        &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}(x_i - \mu_k + \mu_k - \mu)^2\\
+        &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}
+        \big\{(x_i - \mu_k)^2 + (\mu_k - \mu)^2 + 2(x_i - \mu_k)(\mu_k - \mu)\big\}\\
+        &= \frac1{n}\sum_{k=1}^K n_k\frac1{n_k}\sum_{i\in I_k}(x_i - \mu_k)^2
+        + \frac1{n}\sum_{k=1}^K(\mu_k - \mu)^2\sum_{i\in I_k}1\\
+        &\qquad\qquad + \frac2{n}\sum_{k=1}^K (\mu_k - \mu)\sum_{i\in I_k}(x_i - \mu_k)\\
+        &= \sum_{k=1}^K \frac{n_k}n \sigma_k^2 + \sum_{k=1}^K \frac{n_k}n (\mu_k - \mu)^2 + 0\\
+        &= \sum_{k=1}^K \pi_k \sigma_k^2 + \sum_{k=1}^K \pi_k (\mu_k - \mu)^2
+    \end{align*}
+
+    Define a probability space $(\Omega, \mu)$ by
+    \[
+        \Omega = \{x_1,\ldots,x_n\}\times \{1,\ldots,K\},\quad
+        \mu\big(\{(x_i, k)\}\big)= p_{ik} := \begin{cases}
+            \dfrac1n&\text{if $i\in I_k$,}\\[2ex]
+            0&\text{otherwise.}
+        \end{cases}
+    \]
+    Note that $\mu$ is, indeed, a probability measure on $\Omega$:
+    \[
+        \sum_{(i, k)\in\Omega} p_{ik} =\sum_{k=1}^K\sum_{i=1}^n p_{ik}
+        = \sum_{k=1}^K\sum_{i\in I_k}\frac1n = \sum_{k=1}^n\frac{n_k}n = 1
+    \]
+    Define random variables $X$ and $Y$ on $\Omega$ by
+    \[
+        X(x_i, k) = x_i\quad\text{and}\quad Y(x_i, k) = k.
+    \]
+    Then
+    \[
+        \mu = \EE[X] = \sum_{k=1}^K\sum_{i=1}^n p_{ik}x_i
+        = \sum_{k=1}^K\sum_{i\in I_k}\frac1n x_i
+        = \frac1n\sum_{k=1}^K\sum_{i\in I_k} x_i = \frac1n\sum_{i=1}^n x_i.
+    \]
+    Let $Z=\EE[X|Y]$, so that
+    \[
+        Z(k) = \EE[X|Y = k]
+        = \frac{\sum_{i=1}^np_{ik}x_i}{\sum_{i=1}^np_{ik}}
+        = \frac{\sum_{i\in I_k}x_i}{\sum_{i\in I_k}^n1}
+        = \frac1{n_k}\sum_{i\in I_k}x_i = \mu_k.
+    \]
+    \begin{align*}
+        \Var[X|Y=k] &= \EE[(X - Z)^2|Y=k]\\
+        &= \frac{\sum_{i=1}^np_{ik}(X(i) - Z(k))^2}{\sum_{i=1}^n p_{ik}}\\
+        &= \frac{\frac1n\sum_{i\in I_k}(x_i - \mu_k)^2}{\sum_{i\in I_k} \frac1n}\\
+        &= \frac1{n_k}\sum_{i\in I_k}(x_i - \mu_k)^2\\
+        &= \sigma_k^2
+    \end{align*}
+
+    \begin{align*}
+        \EE\left[\Var[X|Y]\right] &= \sum_{k=1}^K\Prob(Y=k)\Var[X|Y=k]\\
+        &=\sum_{k=1}^K\left(\sum_{(i,k)}p_{ik}\right)\sigma_k^2\\
+        &=\sum_{k=1}^K\frac{n_k}n\sigma_k^2\\
+        &=\sum_{k=1}^K\pi_k\sigma_k^2
+    \end{align*}
+    
+    Finally,
+    \begin{align*}
+        \Var Z &= \EE\left[(Z - \EE[Z])^2\right]\\
+        &= \EE\left[(Z - \mu)^2\right] &\text{(by the law of total expectation)}\\
+        &= \sum_{k=1}^K\Prob(Z=\mu_k)(\mu_k - \mu)^2\\
+        &= \sum_{k=1}^K\Prob(Y=k)(\mu_k - \mu)^2&\text{(as $k= \ell \Longleftrightarrow \mu_k= \mu_\ell$)} \\
+        &= \sum_{k=1}^K\left(\sum_{(i, k)}p_{ik}\right)(\mu_k - \mu)^2\\
+        &= \sum_{k=1}^K\pi_k(\mu_k - \mu)^2.
+    \end{align*}
+
+
+\subsection{Matrix version}
+\begin{align*}
+    \frac1{n}\sum_{i=1}^n (x_i - \mu)(x_i - \mu)^T &=
+    \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}(x_i - \mu)(x_i - \mu)^T\\
+    &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}((x_i - \mu_k) + (\mu_k - \mu))((x_i - \mu_k) + (\mu_k - \mu))^T\\
+    &= \frac1{n}\sum_{k=1}^K \sum_{i\in I_k}
+    \big\{(x_i - \mu_k)(x_i - \mu_k)^T + (\mu_k - \mu)(\mu_k - \mu)^T\\
+    &\qquad\qquad+ (x_i - \mu_k)(\mu_k - \mu)^T + (\mu_k - \mu)(x_i - \mu_k)^T\big\}\\
+    &= \frac1{n}\sum_{k=1}^K n_k\frac1{n_k}\sum_{i\in I_k}(x_i - \mu_k)(x_i - \mu_k)^T
+    + \frac1{n}\sum_{k=1}^K(\mu_k - \mu)(\mu_k - \mu)^T\sum_{i\in I_k}1\\
+    &\qquad\qquad + \frac1{n}\sum_{k=1}^K \left\{\sum_{i\in I_k}(x_i - \mu_k)\right\}(\mu_k - \mu)^T\\
+    &\qquad\qquad+ \frac1{n}\sum_{k=1}^K (\mu_k - \mu)\sum_{i\in I_k}(x_i - \mu_k)^T\\
+    &= \sum_{k=1}^K \frac{n_k}n \Sigma_k^2 + \sum_{k=1}^K \frac{n_k}n (\mu_k - \mu)(\mu_k - \mu)^T + 0 + 0\\
+    &= \sum_{k=1}^K \pi_k \Sigma_k^2 + \sum_{k=1}^K \pi_k (\mu_k - \mu)(\mu_k - \mu)^T
+\end{align*}
+
+
+
+
+    \begin{thebibliography}{99}
+        \bibitem{CB}Casella, Berger, \emph{Statistical Inference (2nd ed.)}, Duxbury, 2002.
+        % \bibitem{HMC}Hogg, McKean, Craig, \emph{Introduction to Mathematical Statistics (7th ed.)}, Pearson, 2013.
+        \bibitem{ISLR}
+    \end{thebibliography}
+
+
+\end{document}
