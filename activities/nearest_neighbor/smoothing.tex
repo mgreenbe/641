@@ -1,0 +1,119 @@
+\documentclass{beamer}
+
+\usepackage{mathrsfs, fullpage, amsmath, amssymb, graphicx, xcolor, tikz}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\hat}{\widehat}
+\renewcommand{\tilde}{\widetilde}
+\renewcommand{\bar}{\overline}
+\newcommand{\bx}{\boldsymbol{x}}
+\newcommand{\by}{\boldsymbol{y}}
+\newcommand{\cA}{\mathscr{A}}
+\newcommand{\cB}{\mathscr{B}}
+\newcommand{\cC}{\mathscr{C}}
+\newcommand{\cD}{\mathscr{D}}
+\newcommand{\cF}{\mathscr{F}}
+\newcommand{\cG}{\mathscr{G}}
+\newcommand{\cL}{\mathscr{L}}
+\newcommand{\cN}{\mathscr{N}}
+\newcommand{\cO}{\mathscr{O}}
+\newcommand{\cP}{\mathscr{P}}
+\newcommand{\cX}{\mathscr{X}}
+\newcommand{\cY}{\mathscr{Y}}
+\newcommand{\PP}{\mathbb{P}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\One}{\mathbf{1}}
+\newcommand{\blank}{\,\cdot\,}
+
+\newcommand{\vpi}{\boldsymbol{\pi}}
+\newcommand{\vtheta}{\boldsymbol{\theta}}
+\newcommand{\vzero}{\boldsymbol{0}}
+\newcommand{\va}{\boldsymbol{a}}
+\newcommand{\vb}{\boldsymbol{b}}
+\newcommand{\ve}{\boldsymbol{e}}
+\newcommand{\vf}{\boldsymbol{f}}
+\newcommand{\vg}{\boldsymbol{g}}
+\newcommand{\vu}{\boldsymbol{u}}
+\newcommand{\vv}{\boldsymbol{v}}
+\newcommand{\vw}{\boldsymbol{w}}
+\newcommand{\vx}{\boldsymbol{x}}
+\newcommand{\vy}{\boldsymbol{y}}
+\newcommand{\vz}{\boldsymbol{z}}
+\newcommand{\vU}{\boldsymbol{U}}
+\newcommand{\vV}{\boldsymbol{V}}
+\newcommand{\vW}{\boldsymbol{W}}
+\newcommand{\vX}{\boldsymbol{X}}
+\newcommand{\vY}{\boldsymbol{Y}}
+\newcommand{\vZ}{\boldsymbol{Z}}
+\newcommand{\vbeta}{\boldsymbol{\beta}}
+
+\newcommand{\xhat}{\hat{x}}
+\newcommand{\yhat}{\hat{y}}
+\newcommand{\bxhat}{\hat{\bx}}
+\newcommand{\byhat}{\hat{\by}}
+\newcommand{\betahat}{\hat{\beta}}
+
+\newcommand{\iid}{i.i.d.\ }
+
+\newcommand{\simiid}{\overset{\text{\textsc{IID}}}\sim}
+
+\DeclareMathOperator{\CV}{CV}
+\DeclareMathOperator{\softmax}{softmax}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\expit}{expit}
+\DeclareMathOperator{\logit}{logit}
+\DeclareMathOperator{\Prob}{Prob}
+\DeclareMathOperator{\Bias}{Bias}
+\DeclareMathOperator{\EE}{\mathbb{E}}
+\DeclareMathOperator{\EPE}{EPE}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\cov}{cov}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Mult}{Mult}
+\DeclareMathOperator{\Ber}{Ber}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\mean}{mean}
+\DeclareMathOperator{\MSE}{MSE}
+\DeclareMathOperator{\SSE}{SSE}
+\DeclareMathOperator{\ESS}{ESS}
+\DeclareMathOperator{\RSS}{RSS}
+\DeclareMathOperator{\TSS}{TSS}
+\DeclareMathOperator{\Normal}{Normal}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator{\Argmin}{\mathop{\argmin}}
+\DeclareMathOperator{\Argmax}{\mathop{\argmax}}
+
+
+
+\begin{document}
+
+\title{Nonparametric Regression}
+\author{Matthew Greenmberg}
+\institute{University of Calgary}
+\date{\today}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Parametric regression}
+    
+    predictor $X$, response $X$
+
+    Regression: Find the best approximation to $Y$ as a function of $X$.
+    
+    What does \emph{best} mean?
+    
+    Given $X\subseteq \RR$, 
+    \begin{align*}
+        Y = f(a_1,\ldots,a_d, X) + \epsilon
+    \end{align*}
+\end{frame}
+
+\end{document}
+

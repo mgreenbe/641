@@ -41,12 +41,12 @@ assuming such estimates exist.
 
     \part Prove that
     \[
-        \nabla \ell_i(a,b) = (y_i-\sigma(a + bx_i))\begin{bmatrix}1\\x_i\end{bmatrix}
+        \nabla \ell_i(a,b) = (\sigma(a + bx_i) - y_i)\begin{bmatrix}1\\x_i\end{bmatrix}
             \qquad \text{(Hint: Use $(*)$.)}
     \]
     and that
     \[
-        \nabla^2\ell_i(a,b) = -\sigma'(a+bx_i)\begin{bmatrix}
+        \nabla^2\ell_i(a,b) = \sigma'(a+bx_i)\begin{bmatrix}
             1 & x_i\\
             x_i & x_i^2
         \end{bmatrix}.
@@ -56,7 +56,7 @@ assuming such estimates exist.
 
     \part Find a basis of the nullspace $N(\nabla^2\ell_i(a,b))$ of $\nabla^2\ell_i(a,b)$ whose elements do not depend on $a$ and $b$.
     
-    \part Suppose that there are indices $i$ and $j$ such that $x_i\neq x_j$.
+    \part\label{hint} Suppose that there are indices $i$ and $j$ such that $x_i\neq x_j$.
     Prove that
     \[
         \bigcap_{i=1}^n N(\nabla^2\ell_i(a,b)) = \left\{
@@ -65,7 +65,7 @@ assuming such estimates exist.
             \end{bmatrix}
             \right\}.
     \]
-    (Hint: Use (4).)
+    (Hint: Use~\ref{hint}.)
 
     \item Suppose that there are indices $i$ and $j$ such that $x_i\neq x_j$.
     Show that $\nabla^2 \ell(a,b)$ is positive-definite and, hence, that $\ell(a,b)$ is strictly convex.
