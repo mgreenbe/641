@@ -1,0 +1,340 @@
+    \documentclass[12pt]{amsart}
+
+    \usepackage{amsmath, amssymb, amsthm, url}
+    \input{../macros.tex}
+    \newcommand{\sol}{\bigskip\noindent\textbf{Solution: }}
+
+    \newcommand{\vmu}{\boldsymbol{\mu}}
+    \newcommand{\vSigma}{\boldsymbol{\Sigma}}
+    \DeclareMathOperator{\Cat}{Categorical}
+
+    \begin{document}
+    Problem 1:
+
+    a)
+
+    \begin{align*}
+        \sigma'(x) &= -(1+e^{-x})^{-2}(-e^{-x})\\
+        &= \frac{1}{1+e^{-x}}\frac{e^{-x}}{1 - e^{-x}}\\
+        &= \frac{1}{1+e^{-x}}\left(1 - \frac{1}{1 - e^{-x}}\right)\\
+        &= \sigma(x)(1-\sigma(x))
+    \end{align*}
+    Since $0<\sigma(x)<1$ for all $x$, $0<1-\sigma(x)<1$ as well, and $\sigma'(x)>0$.
+    b)
+
+    \begin{align*}
+    \frac{\partial\ell_i}{\partial a}
+    &= -y_i\frac{\sigma'(a+bx_i)}{\sigma(a+bx_i)}
+    + (1-y_i)\frac{\sigma'(a+bx_i)}{1 - \sigma(a+bx_i)}\\
+    &= -y_i(1-\sigma(a+bx_i)) + (1-y_i)\sigma(a+bx_i)\\
+    &= \sigma(a+bx_i) - y_i,\\
+    \frac{\partial\ell_i}{\partial b}
+    &= -y_i\frac{x_i\sigma'(a+bx_i)}{\sigma(a+bx_i)}
+    + (1-y_i)\frac{x_i\sigma'(a+bx_i)}{1 - \sigma(a+bx_i)}\\
+    &= -y_ix_i(1-\sigma(a+bx_i)) + (1-y_i)x_i\sigma(a+bx_i)\\
+    &= x_i(\sigma(a+bx_i) - y_i),
+    \end{align*}
+    Therefore,
+    \[
+        \nabla \ell_i(a, b) = (\sigma(a+bx_i) - y_i)\begin{bmatrix}
+            1\\x_i
+        \end{bmatrix}.
+    \]
+
+    \begin{align*}
+        \frac{\partial^2\ell_i}{\partial a^2} &= \sigma'(a+bx_i),\\
+        \frac{\partial^2\ell_i}{\partial b^2} &= x_i^2\sigma'(a+bx_i),
+        \frac{\partial^2\ell_i}{\partial a\partial b} &= x_i\sigma'(a+bx_i),
+    \end{align*}
+    Thus,
+    \[
+        \nabla^2\ell_i(a, b) = \sigma'(a+bx_i) = \begin{bmatrix}
+            1&x_i\\x_i&x_i^2.
+        \end{bmatrix}
+    \]
+    The eigenvalues of this matrix are $0$ and $1+x_i^2$, both nonnegative.
+    Thus, $\nabla^2\ell_i(a, b)$ is positive semidefinite.
+
+
+    c)
+
+    The nullspace of $\nabla^2\ell_i(a, b)$ has dimension $1$,
+    equal to the multiplicity of 0 as an eigenvalue.
+    Therefore, the nonzero vector $\begin{bmatrix}x_i& -1\end{bmatrix}^T$
+    is a basis of $N(\nabla^2\ell_i(a, b))$.
+
+    d)
+
+    Since $x_i\neq x_j$, the vectors $\begin{bmatrix}x_i& -1\end{bmatrix}^T$
+    and $\begin{bmatrix}x_j& -1\end{bmatrix}^T$ are linearly independent.
+    Therefore, the subspaces they span, which, by (c), are the nullspaces of
+    $\nabla^2\ell_i(a, b)$ and $\nabla^2\ell_j(a, b)$, respectively, intersect trivially.
+    Therefore,
+    \[
+        \{\vzero\}\subseteq \bigcap_{k=1}^n N(\nabla^2\ell_k(a, b))
+        \subseteq N(\nabla^2\ell_i(a, b)) \cap N(\nabla^2\ell_j(a, b))
+        = \{\vzero\}.
+    \]
+
+    e)
+
+    Suppose $\vx^T\nabla^2\ell(a, b)\vx=0$ for some $\vx\in\RR^2$.
+    We must show that $\vx=0$.
+
+    Since $\ell = \sum\ell_i$,
+    \[
+        \vx^T\nabla^2\ell(a, b)\vx = \sum_{i=1}^n \vx^T\nabla^2\ell_i(a, b)\vx.
+    \]
+    As $\nabla^2\ell_i(a, b)$ is positive semidefinite for all $i$, by (b),
+    $\vx^T\nabla^2\ell_i(a, b)\vx\geq 0$ for all $i$. It follows that
+    \[
+        \vx^T\nabla^2\ell_i(a, b)\vx = 0
+    \]
+    for all $i$.
+
+    \textbf{Fact:} If $A$ is a positive-semidefinite, symmetric matrix, there is a
+    matrix $B$ of real numbers such that $A = B^TB$. Moreover, $N(A)=N(B)$
+    (and $C(A)=C(B^T))$. (This result follows from the Spectral Theorem.)
+
+    Write
+    \[
+        \nabla^2\ell_i(a, b) = B_i^TB_i.
+    \]
+    Then
+    \[
+        0 = \vx^T\nabla^2\ell_i(a, b)\vx =\vx^T B_i^TB_i\vx = (B_i\vx)^T(B_i\vx) = \|B_i\vx\|^2,
+    \]
+    and it follows that $B_i\vx_i=\vzero$ for all $i$.
+    So
+    \[
+        \vx \in N(B_i)=N(\nabla^2\ell_i(a, b))
+    \]
+    and, thus,
+    \[
+        \vx \in \bigcap_{i=1}^nN(\nabla^2\ell_i(a, b)).
+    \]
+    This intersection is zero by our hypothesis that the $x_i$ are not all equal, and by (d).
+    Therefore, $\vx=\vzero$ and $\nabla^2\ell(a, b)$ is positive definite.
+
+    (f)
+
+    Since $\nabla^2\ell(a, b)$ is positive definite, $\ell(a, b)$ is strictly convex.
+    Therefore, $\ell(a, b)$ has at most one local minimum.
+
+
+    Problem 2.
+
+    a)
+
+    Since $0<\sigma(x)<1$ for all $x$, it folloews that $0<p_i(a, b)<1$ for all $a, b$.
+    Therefore, $\log p_i(a, b)<0$ and $\ell_i(a, b)=-\log p_i(a, b)>0$.
+
+    b)
+
+    Suppose $$\lim_{t\to\infty}\ell_i(tv_1, tv_2)=\infty.$$
+    Then
+    \[
+        \lim_{t\to\infty}\log p_i(tv_1, tv_1) = -\lim_{t\to\infty}\ell_i(tv_1, tv_2) = -\infty.
+    \]
+    It follows that
+    \[
+        \lim_{t\to\infty} p_i(tv_1, tv_2)= 0.
+    \]
+    Suppose, first, that $y_i=1$. Then
+    $$p_i(tv_1, tv_2) = \sigma(t(v_1+v_2x_i))$$
+    and
+    \[
+    \lim_{t\to\infty}\sigma(t(v_1+v_2x_i)) = 0.
+    \]
+    This happens when $t(v_1+v_2x_i)\to-\infty$ as $t\to\infty$, i.e., when
+    \[
+        \begin{bmatrix}
+            v_1\\v_2
+        \end{bmatrix}\cdot\begin{bmatrix}
+            1\\x_1
+        \end{bmatrix} = v_1+v_2x_i < 0,
+    \]
+    i.e., when
+    \[
+    \begin{bmatrix}
+        v_1\\v_2
+    \end{bmatrix}
+    \in H\left(-
+    \begin{bmatrix}
+    1\\x_i
+    \end{bmatrix}
+    \right).
+    \]
+
+    Suppose, now, that $y_i=0$, so that $p_i(tv_1, tv_2) = 1-\sigma(t(v_1+v_2x_i))$.
+    We have
+    \[
+        \lim_{t\to\infty}(1-\sigma(t(v_1+v_2x_i))) = 0
+    \]
+    if and only if
+    \[
+        \lim_{t\to\infty}\sigma(t(v_1+v_2x_i)) = 1
+    \]
+    if and only if $t(v_1+v_2x_i)\to +\infty$ as $t\to\infty$, i.e., when
+    \[
+        \begin{bmatrix}
+            v_1\\v_2
+        \end{bmatrix}\cdot\begin{bmatrix}
+            1\\x_1
+        \end{bmatrix} = v_1+v_2x_i > 0,
+    \]
+    i.e., when
+    \[
+    \begin{bmatrix}
+        v_1\\v_2
+    \end{bmatrix}
+    \in H\left(
+    \begin{bmatrix}
+    1\\x_i
+    \end{bmatrix}
+    \right).
+    \]
+    Setting
+    \[
+    H_i = \begin{cases}H(\vw_i) &\text{if $y_i=0$},\\
+        H(-\vw_i) &\text{if $y_i=1$}
+    \end{cases},\quad\text{where}\quad
+    \vw_i = \begin{bmatrix}
+        1\\x_i
+    \end{bmatrix}.
+    \]
+
+    d)
+
+            Suppose $y_i=y_k=0$ and $y_j=1$.
+            Then
+            \[
+                H_i=H(\vw_i),\quad H_j=H(-\vw_j),\quad\text{and}\quad
+                H_k=H(\vw_k)
+            \]
+            Note that
+            \[
+                -(-\vw_j) = \vw_j = a\vw_i + b\vw_k,\quad\text{where}\quad
+                a=\frac{x_k-x_j}{x_k-x_i}\quad\text{and}\quad
+                a=\frac{x_j-x_i}{x_k-x_i}.
+            \]
+            Using the inequalities $x_1<x_2<x_3$, one deduces that $0<a, b<1$.
+            Therefore, by (c),
+            \[
+                H_i\cup H_j\cup H_k = \RR^2 - \{\vzero\}.
+            \]
+
+            The case where $y_i=y_k=1$ and $y_j=0$ is argued similarly.
+
+        e)
+
+        Let $\vv\in\RR^2$ be nonzero.
+        Then $\vv$ belongs to one of $H_i$, $H_j$, or $H_k$.
+        Without loss of generality, suppose $\vv\in H_i$. Then, by (b),
+        \[
+            \lim_{t\to\infty}\ell_i(tv_1, tv_2) = \infty.
+        \]
+        Since each $\ell(a, b)\geq \ell_i(a, b)$ by (a), we have
+        \[
+            \lim_{t\to\infty}\ell_i(tv_1, tv_2) = \infty,
+        \]
+        too. Therefore, that $S_K$ does not contain the ray $\{t\vv:t\geq 0\}$.
+        Since $\vv$ was arbitrary, $S_K$ doesn't contain any ray of this form.
+
+        f)
+
+        By Problem 1(b), $\ell(a, b)$ is convex. Therefore $S_K$ is convex.
+        Since $S_K$ is convex and, by e), contains no ray, $S_K$ is bounded.
+        Being closed and bounded, it's compact.
+
+        g)
+
+        Since $\ell$ is continuous and $S_K$ is compadt, $\ell$ achieves
+        achieves its infimum on $S_K$ at $(\hat a, \hat b)\in S_K$, say.
+        If $\ell(a,b)\leq \ell(\hat a, \hat b)$,
+        then $\ell(a, b)\leq K$ and $(a, b)\in K$. It follows that
+        $\ell(a, b)=\ell(\hat a, \hat b)$. Therefore,
+        \[
+            \ell(\hat a, \hat b) = \inf_{(a,b)\in\RR^2}\ell(a, b).
+        \]
+        We've assumed our $x_i$ values are all distinct,
+        so the hypothesis of 1(f) holds.
+        Therefore, $(\hat a, \hat b)$ is the unique point at which
+        $\ell$ achieves its minimum value.
+
+
+        Let $A_i=\nabla^2\ell_i(a, b)$ and let $A=\nabla^2\ell(a, b)=\sum A_i$.
+
+        (1b) Show that $A_i$ has two nonnegative eigenvalues.
+
+        (1c) Find a basic solution of the system
+        \[
+            A_i\begin{bmatrix}
+                s\\t
+            \end{bmatrix}=\begin{bmatrix}
+                0\\0
+            \end{bmatrix}.
+        \]
+
+        (1d) An element of $N(A_i)\cap N(A_j)$ is a solution of the homogeneous system
+        \[
+            \begin{bmatrix}
+                A_i\\A_j
+            \end{bmatrix}\begin{bmatrix}
+                s\\t
+            \end{bmatrix}=\begin{bmatrix}
+                0\\0
+            \end{bmatrix}.
+        \]
+        Use the fact that $x_i\neq x_j$ to deduce that this system has only the trivial solution.
+
+        (1e) Let $\vx$ be such that $\vx^TA\vx=0$.
+        We need to show that $\vx=0$. Note that
+        \[
+            \vx^T A\vx = \sum\vx^TA_i\vx.
+        \]
+        The $\vx^TA_i\vx$ are nonnegative (why?), so $\vx^TA\vx=0$ if and only if $\vx^T A_i\vx=0$ for all $i$.
+        By the Lemma below, this holds if and only if $\vx\in N(A_i)$ for all $i$...
+
+
+        \textbf{Lemma:} If $S$ is a positive semidefinite, symmetric matrix, then
+        \[
+            \{\vy : \vy^TS\vy=0\}=N(S)
+        \]
+
+        \textbf{Proof:} Clearly, $N(S)\subseteq\{\vy : \vy^TS\vy=0\}$.
+        Conversely, suppose $\vy^TS\vy=0$.
+        Since $S$ is symmetric and positive semidefinite, there is a 
+        matrix $R$ of real numbers such that $S = R^TR$.
+        (This follows from the the Spectral Theorem.) Then
+        \[
+            0=\vy^TS\vy = \vy^TR^TR\vy = (R\vy)^T(R\vy) = \|R\vy\|^2,
+        \]
+        so $R\vy$ must be zero. Thus, $\vy\in N(R)\subseteq N(S)$.
+
+        (2a) Use the fact that $0<\sigma(x)<1$ for all $x$.
+
+        (2b) Show that
+        \[
+            \lim_{t\to\infty}\ell_i(tv_1, tv_2)=\infty
+        \]
+        if and only if
+        \begin{itemize}
+            \item $(v_1+v_2x_1)>0$, if $y_i=0$.
+            \item $(v_1+v_2x_1)<0$, if $y_i=1$.
+        \end{itemize}
+
+        (2c) I'll accept some nicely drawn pictures illustrating what's going on here in lieu of a formal proof. 
+
+        (2d) Suppose $y_i=y_k=0$ and $y_j=1$. By (b),
+        \[
+            H_i=H(\vw_i),\quad H_j=H(-\vw_j),\quad\text{and}\quad
+            H_k=H(\vw_k),
+        \]
+        where $\vw_i=\begin{bmatrix}
+            1&x_i
+        \end{bmatrix}^T$.
+        Show that $\vw_j = a\vw_i + b\vw_k$ with $a, b>0$. Then invoke (c).
+
+        2(e) Use (b).
+    \end{document}

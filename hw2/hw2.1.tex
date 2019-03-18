@@ -174,8 +174,66 @@ Compare with equation~(4.15) in~\cite{ISLR}.
 \part (Do not hand in.) Can you prove analogous results with covariance matrices in place of scalar variances?
 \end{parts}
 
-\question Applied problem to be added...
+\question 
+Use whatever software package you want to do this problem.
+I recommend \texttt{R} or \texttt{python} with \texttt{sklearn}, though.
 
+Load the file \texttt{dataset\_1.csv}, containing synthetic data for a binary classification problem with two numerical features.
+These features are in the first two columns of the file; the target is in the third column.
+
+\begin{parts}
+\part Make a scatter plot of the data, using different colors or marker shapes to distinguish class labels.
+
+\part Fit the data to a logistic regression model and to a Gaussian na\"ive Bayes model.
+Plot the decision boundaries. Do you expect these classifiers to yield satisfactory results?
+\part Write $X_1$ and $X_2$ for the two features.
+Augment the dataset with three new features:
+\[
+    X_3:= X_1^2,\quad X_4:= X_1X_2,\quad X_5:= X_2^2
+\]
+
+\part Fit the data to a logistic regression model and to a Gaussian na\"ive Bayes model.
+
+\part Let
+\[
+    c_0 + c_1X_1 + c_2X_2 + c_3X_3 + c_4X_4 + c_5X_5 = 0.
+\]
+be the decision boundary. Since it's graph is a hyperplane in $\RR^5$, we can't plot it.
+We can, however, plot its inverse image in $\RR^2$ under the map
+\[
+    (x_1, x_2)\mapsto(x_1, x_2, x_1^2, x_1x_2, x_2^2),
+\]
+i.e., the plane curve
+\[
+    c_0 + c_1x_1 + c_2x_2 + c_3x_1^2 + c_4x_1x_2 + c_5x_2^2 = 0.
+\]
+Plot the decision boundary. Comment on your results.
+
+\part Repeat with the dataset in \texttt{dataset\_1.csv},
+augmenting your dataset with all the monomials in $X_1$ and $X_2$ of degrees $2$ and $3$, for a total
+of nine features.
+\end{parts}
+
+\question
+Load the file \texttt{dataset\_3.csv}, containing synthetic data for a four class classification problem with two numerical features.
+These features are in the first two columns of the file; the target is in the third column.
+We will use a \emph{one-versus-rest} approach to construct a four class classifier out of four binary classifiers.
+
+\begin{parts}
+\part Make a scatter plot of the data, using different colors or marker shapes to distinguish class labels.
+
+\part Split the dataset into training and testing subsets.
+Let $\vy_{tr}$ and $\vy_{te}$ be their target vectors.
+
+\part Let $k_0\in\{0, 1, 2, 3\}$. 
+Construct a new training and testing target vectors, $\vy_{tr, k}$ and $\vy_{te, k}$, vector by replacing the three class labels $k\neq k_0$ with $4$.
+Fit the resulting training set to a logistic regression model.
+
+\part Test your four models on their corresponding training sets: For each test observation, $x$,
+your models will give estimates for $p(k|x)$.
+Assign each test observation to the class label, $k$, for which this probability is the highest.
+What is the overall relative accuracy of your classifier on the test set?
+\end{parts}
 
 \end{questions}
 

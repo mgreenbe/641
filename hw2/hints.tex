@@ -1,0 +1,89 @@
+    \documentclass[12pt]{amsart}
+
+    \usepackage{amsmath, amssymb, amsthm, url}
+    \input{../macros.tex}
+    \newcommand{\sol}{\bigskip\noindent\textbf{Solution: }}
+
+    \newcommand{\vmu}{\boldsymbol{\mu}}
+    \newcommand{\vSigma}{\boldsymbol{\Sigma}}
+    \DeclareMathOperator{\Cat}{Categorical}
+
+    \begin{document}
+    \title{Assignment 2: Hints}
+    \maketitle
+
+        Let $A_i=\nabla^2\ell_i(a, b)$ and let $A=\nabla^2\ell(a, b)=\sum A_i$.
+
+        (1b) Show that $A_i$ has two nonnegative eigenvalues.
+
+        (1c) Find a basic solution of the system
+        \[
+            A_i\begin{bmatrix}
+                s\\t
+            \end{bmatrix}=\begin{bmatrix}
+                0\\0
+            \end{bmatrix}.
+        \]
+
+        (1d) An element of $N(A_i)\cap N(A_j)$ is a solution of the homogeneous system
+        \[
+            \begin{bmatrix}
+                A_i\\A_j
+            \end{bmatrix}\begin{bmatrix}
+                s\\t
+            \end{bmatrix}=\begin{bmatrix}
+                0\\0
+            \end{bmatrix}.
+        \]
+        Use the fact that $x_i\neq x_j$ to deduce that this system has only the trivial solution.
+
+        (1e) Let $\vx$ be such that $\vx^TA\vx=0$.
+        We need to show that $\vx=0$. Note that
+        \[
+            \vx^T A\vx = \sum\vx^TA_i\vx.
+        \]
+        The $\vx^TA_i\vx$ are nonnegative (why?), so $\vx^TA\vx=0$ if and only if $\vx^T A_i\vx=0$ for all $i$.
+        By the Lemma below, this holds if and only if $\vx\in N(A_i)$ for all $i$...
+
+
+        \textbf{Lemma:} If $S$ is a positive semidefinite, symmetric matrix, then
+        \[
+            \{\vy : \vy^TS\vy=0\}=N(S)
+        \]
+
+        \textbf{Proof:} Clearly, $N(S)\subseteq\{\vy : \vy^TS\vy=0\}$.
+        Conversely, suppose $\vy^TS\vy=0$.
+        Since $S$ is symmetric and positive semidefinite, there is a 
+        matrix $R$ of real numbers such that $S = R^TR$.
+        (This follows from the the Spectral Theorem.) Then
+        \[
+            0=\vy^TS\vy = \vy^TR^TR\vy = (R\vy)^T(R\vy) = \|R\vy\|^2,
+        \]
+        so $R\vy$ must be zero. Thus, $\vy\in N(R)\subseteq N(S)$.
+
+        (2a) Use the fact that $0<\sigma(x)<1$ for all $x$.
+
+        (2b) Show that
+        \[
+            \lim_{t\to\infty}\ell_i(tv_1, tv_2)=\infty
+        \]
+        if and only if
+        \begin{itemize}
+            \item $(v_1+v_2x_1)>0$, if $y_i=0$.
+            \item $(v_1+v_2x_1)<0$, if $y_i=1$.
+        \end{itemize}
+
+        (2c) I'll accept some nicely drawn pictures illustrating what's going on here in lieu of a formal proof. 
+
+        (2d) Suppose $y_i=y_k=0$ and $y_j=1$. By (b),
+        \[
+            H_i=H(\vw_i),\quad H_j=H(-\vw_j),\quad\text{and}\quad
+            H_k=H(\vw_k),
+        \]
+        where $\vw_i=\begin{bmatrix}
+            1&x_i
+        \end{bmatrix}^T$.
+        Show that $\vw_j = a\vw_i + b\vw_k$ with $a, b>0$. Then invoke (c).
+
+        (2e) Use (b).
+    \end{document}
